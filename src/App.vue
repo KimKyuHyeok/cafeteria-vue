@@ -1,11 +1,8 @@
 <script setup>
-import Login from './views/Login.vue'; // Login.vue 임포트
 </script>
 
 <template>
-  <div>
-    <Login /> <!-- Login.vue 컴포넌트 표시 -->
-  </div>
+    <router-view/>
 </template>
 
 <style>
