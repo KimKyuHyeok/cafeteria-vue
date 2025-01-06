@@ -27,18 +27,30 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth) { // Boolean 값이 true일 때
-    const token = localStorage.getItem('companyToken') || localStorage.getItem('userToken'); // 적절한 토큰 확인
+  const companyToken = localStorage.getItem('companyToken');
+  const userToken = localStorage.getItem('userToken');
 
-    if (!token) {
-      next('/login'); // 인증되지 않은 경우 로그인 페이지로 리다이렉트
+  if (to.path === '/login' || to.path === '/signup') {
+    if (userToken) {
+      next('/user');
+      return;
+    } else if (companyToken) {
+      next('/company/restaurant')
+      return;
+    }
+  }
+
+  if (to.meta.requiresAuth) {
+    if (!companyToken && !userToken) {
+      next('/login');
     } else {
-      next(); // 인증된 경우 페이지 접근 허용
+      next();
     }
   } else {
-    next(); // requiresAuth가 없거나 false일 경우 접근 허용
+    next();
   }
 });
+
 
   
 
