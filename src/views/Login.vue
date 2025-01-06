@@ -1,96 +1,128 @@
-<script setup>
+<template>
+  <div class="title-name">
+    <h2>식권모아</h2>
+  </div>
+  <div>
+    <!-- 버튼 -->
+    <div class="button-container">
+      <button class="user-login-btn" @click="openPopup('user')">회원 로그인</button>
+      <button class="company-login-btn" @click="openPopup('company')">기업 로그인</button>
+    </div>
+
+    <!-- 팝업 배경 -->
+    <div v-if="isPopupVisible" class="overlay" @click="closePopup">
+      <!-- 팝업창 -->
+      <div class="popup" @click.stop>
+        <h2>{{ popupType === 'user' ? '회원 로그인' : '기업 로그인' }}</h2>
+        <form @submit.prevent="handleSubmit">
+          <!-- 회원 로그인 -->
+          <div v-if="popupType === 'user'">
+            <label for="email">이메일</label>
+            <input type="text" id="email" v-model="form.email" placeholder="이메일 입력" />
+          </div>
+
+          <!-- 기업 로그인: 사업자등록번호 -->
+          <div v-if="popupType === 'company'">
+            <label for="registrationNumber">사업자등록번호</label>
+            <input type="text" id="registrationNumber" v-model="form.registrationNumber" placeholder="사업자등록번호 입력" />
+          </div>
+
+          <!-- 공통: 비밀번호 입력 -->
+          <div v-if="popupType === 'user' || popupType === 'company'">
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" v-model="form.password" placeholder="비밀번호 입력" />
+          </div>
+
+          <button type="submit">로그인</button>
+          <button type="button" @click="closePopup">닫기</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { COMPANY_LOGIN, USER_LOGIN } from '@/graphql';
+import { useMutation } from '@vue/apollo-composable';  // @vue/apollo-composable에서 useMutation을 가져옵니다.
 import { ref } from 'vue';
+import { useRouter } from 'vue-router'; // 라우터 임포트
 
-// 팝업 상태 및 데이터
-const isPopupVisible = ref(false); // 팝업 표시 여부
-const popupType = ref(''); // 팝업 유형 ('user' 또는 'company')
-const form = ref({
-  username: '',
-  password: '',
-  businessNumber: '', // 기업 로그인용 추가 데이터
-});
+export default {
+  data() {
+    return {
+      isPopupVisible: false, // 팝업 표시 여부
+      popupType: '', // 팝업 유형 ('user' 또는 'company')
+      form: {
+        email: '',
+        password: '',
+        registrationNumber: '', // 기업 로그인용 추가 데이터
+      },
+    };
+  },
+  methods: {
+    openPopup(type) {
+      this.popupType = type; // 팝업 타입 설정
+      this.isPopupVisible = true; // 팝업 열기
+    },
+    closePopup() {
+      this.isPopupVisible = false; // 팝업 닫기
+      this.form = { email: '', password: '', registrationNumber: '' }; // 폼 초기화
+    },
+    async handleSubmit() {
+      try {
+        let token;
 
-// 팝업 열기
-const openPopup = (type) => {
-  popupType.value = type; // 팝업 타입 설정
-  isPopupVisible.value = true; // 팝업 열기
-};
+        if (this.popupType === 'company') {
+          if (!this.form.registrationNumber) {
+            alert('사업자등록번호를 입력해주세요.');
+            return;
+          }
 
-// 팝업 닫기
-const closePopup = () => {
-  isPopupVisible.value = false; // 팝업 닫기
-  form.value = { username: '', password: '', businessNumber: '' }; // 폼 초기화
-};
+          const { data } = await this.$apollo.mutate({
+            mutation: COMPANY_LOGIN,
+            variables: {
+              data: {
+                registrationNumber: this.form.registrationNumber,
+                password: this.form.password
+              }
+            }
+          })
 
-// 로그인 처리
-const handleSubmit = () => {
-  if (popupType.value === 'company') {
-    // 기업 로그인
-    if (!form.value.businessNumber) {
-      alert('사업자등록번호를 입력해주세요.');
-      return;
-    }
-    console.log('기업 로그인 요청:', form.value); // API 연동 가능
-  } else if (popupType.value === 'user') {
-    // 회원 로그인
-    console.log('회원 로그인 요청:', form.value); // API 연동 가능
-  }
-  closePopup(); // 팝업 닫기
+          token = data.signin.accessToken; // 기업 로그인 후 받은 토큰          
+
+          if (token) {
+            localStorage.setItem('companyToken', token);
+            this.$router.push('/company/restaurant')
+          }
+        } else if (this.popupType === 'user') {
+          const { data } = await this.$apollo.mutate({
+            mutation: USER_LOGIN,
+            variables: {
+              data: {
+                email: this.form.email,
+                password: this.form.password
+              }
+            }
+          })
+
+          token = data.userSignin.accessToken; // 기업 로그인 후 받은 토큰
+
+          if (token) {
+            localStorage.setItem('userToken', token);
+            this.$router.push('/company/restaurant')
+          }
+        }
+
+
+
+      } catch (error) {
+        alert('로그인 정보가 일치하지 않습니다.');
+        console.log(error);
+      }
+    },
+  },
 };
 </script>
-
-
-<template>
-    <div class="title-name">
-        <h2>식권모아</h2>
-    </div>
-    <div>
-      <!-- 버튼 -->
-      <div class="button-container">
-        <button class="user-login-btn" @click="openPopup('user')">회원 로그인</button>
-        <button class="company-login-btn" @click="openPopup('company')">기업 로그인</button>
-      </div>
-  
-      <!-- 팝업 배경 -->
-      <div v-if="isPopupVisible" class="overlay" @click="closePopup">
-        <!-- 팝업창 -->
-        <div class="popup" @click.stop>
-          <h2>{{ popupType === 'user' ? '회원 로그인' : '기업 로그인' }}</h2>
-          <form @submit.prevent="handleSubmit">
-            <!-- 회원 로그인 -->
-            <div v-if="popupType === 'user'">
-                <label for="username">아이디</label>
-                <input type="text" id="username" v-model="form.username" placeholder="아이디 입력" />
-            </div>
-
-            <!-- 기업 로그인: 사업자등록번호 -->
-            <div v-if="popupType === 'company'">
-                <label for="businessNumber">사업자등록번호</label>
-                <input
-                type="text"
-                id="businessNumber"
-                v-model="form.businessNumber"
-                placeholder="사업자등록번호 입력"
-                />
-            </div>
-  
-            <!-- 공통: 비밀번호 입력 -->
-            <div v-if="popupType === 'user' || popupType === 'company'">
-              <label for="password">비밀번호</label>
-              <input type="password" id="password" v-model="form.password" placeholder="비밀번호 입력" />
-            </div>
-  
-
-  
-            <button type="submit">로그인</button>
-            <button type="button" @click="closePopup">닫기</button>
-          </form>
-        </div>
-      </div>
-    </div>
-</template>
-      
-  
 
 <style scoped>
     .title-name {
@@ -199,4 +231,3 @@ const handleSubmit = () => {
         color: white;
     }
 </style>
-      
