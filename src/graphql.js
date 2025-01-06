@@ -12,8 +12,24 @@ export const COMPANY_LOGIN = gql`
 export const USER_LOGIN = gql`
     mutation userSignin($data: UserSigninInput!) {
         userSignin(data: $data) {
-        accessToken
-        refreshToken
+            accessToken
+            refreshToken
+        }
+    }
+`
+
+export const COMPANY_SIGNUP = gql`
+    mutation signup($data: CompanySignupInput!) {
+        signup(data: $data) {
+            accessToken
+        }
+    }
+`
+
+export const USER_SIGNUP = gql`
+    mutation userSignup($data: UserSignupInput!) {
+        userSignup(data: $data) {
+            accessToken
         }
     }
 `
