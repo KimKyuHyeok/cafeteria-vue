@@ -20,7 +20,7 @@
       </select>
     </div>
 
-    <button @click="handleSubmit">전송</button>
+    <button @click="handleSubmit">검색</button>
   </div>
 </template>
 
@@ -75,9 +75,6 @@ export default {
           query: GET_RESTAURANTS,
           variables: { keyword },
         });
-
-        console.log(data)
-        console.log(keyword)
 
         return data.restaurantFindByAddress;
       } catch (error) {
