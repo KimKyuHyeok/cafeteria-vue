@@ -18,6 +18,21 @@ export const USER_LOGIN = gql`
     }
 `
 
+export const GET_COUPONS = gql`
+    query {
+        couponsFindByCompanyId {
+            id
+            name
+            address
+            coupon {
+                count
+                companyId
+                restaurantId
+            }
+        }
+    }
+`
+
 export const GET_RESTAURANTS = gql`
     query restaurantFindByAddress($keyword: String!) {
         restaurantFindByAddress(keyword: $keyword) {

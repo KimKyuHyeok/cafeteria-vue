@@ -5,12 +5,14 @@ const companyRoutes = [
     {
         path: '/company/coupon',
         name: 'CompanyCoupon',
-        component: CompanyCoupon
+        component: CompanyCoupon,
+        meta: { requiresAuth: true }
     },
     {
         path: '/company/restaurant',
         name: 'CompanyRestaurant',
-        component: CompanyRestaurant
+        component: CompanyRestaurant,
+        meta: { requiresAuth: true }
     }
 ]
 
