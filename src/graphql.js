@@ -43,3 +43,76 @@ export const GET_RESTAURANTS = gql`
         } 
     } 
 `
+
+export const GET_USERS_APPROVED = gql`
+    query {
+        userWithCompanyListByApproved {
+            id
+            name
+            phoneNumber
+            email
+            status
+            createdAt
+            updatedAt
+            companyUserId
+        }
+    }
+`
+
+export const GET_USERS_PENDING = gql`
+    query {
+        userWithCompanyListByPending {
+            id
+            name
+            phoneNumber
+            email
+            status
+            createdAt
+            updatedAt
+            companyUserId
+        }
+    }
+`
+
+export const GET_USERS_REJECTED = gql`
+    query {
+        userWithCompanyListByRejected {
+            id
+            name
+            phoneNumber
+            email
+            status
+            createdAt
+            updatedAt
+            companyUserId
+        }
+    }
+
+`
+
+export const APPROVED_USER = gql`
+    mutation userApproved($data: CompanyJoinRequestDto!) {
+        userApproved(data: $data) {
+            success
+            message
+        }
+    }
+`
+
+export const REJECTED_USER = gql`
+    mutation userRejected($data: CompanyJoinRequestDto!) {
+        userRejected(data: $data) {
+            success
+            message
+        }
+    }
+`
+
+export const DELETE_USER = gql`
+    mutation userCompanyDelete($data: CompanyUserDto!) {
+        userCompanyDelete(data: $data) {
+            success
+            message
+        }
+    }
+`
