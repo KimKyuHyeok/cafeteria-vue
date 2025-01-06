@@ -3,11 +3,15 @@
     <h2>식권모아</h2>
   </div>
   <div>
-    <!-- 버튼 -->
+    <div class="signup-container">
+      <button class="signup-tab-btn" @click="signupPage">회원가입</button>
+    </div>
+
     <div class="button-container">
       <button class="user-login-btn" @click="openPopup('user')">회원 로그인</button>
       <button class="company-login-btn" @click="openPopup('company')">기업 로그인</button>
     </div>
+
 
     <!-- 팝업 배경 -->
     <div v-if="isPopupVisible" class="overlay" @click="closePopup">
@@ -67,6 +71,9 @@ export default {
     closePopup() {
       this.isPopupVisible = false; // 팝업 닫기
       this.form = { email: '', password: '', registrationNumber: '' }; // 폼 초기화
+    },
+    signupPage() {
+      this.$router.push('/signup')
     },
     async handleSubmit() {
       try {
@@ -229,5 +236,21 @@ export default {
     .popup button[type="button"] {
         background-color: #f44336;
         color: white;
+    }
+    .signup-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .signup-tab-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #f39c12;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .signup-tab-btn:hover {
+      background-color: #d35400;
     }
 </style>
