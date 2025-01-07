@@ -104,7 +104,7 @@ import { USER_SIGNUP } from '@/graphql';
 
                 if (token) {
                     localStorage.setItem('userToken', token);
-                    this.$router.push('/user')
+                    this.$router.push('/user/coupons')
                 }
             } catch (error) {
                 if (error.graphQLErrors && error.graphQLErrors.length > 0) {
