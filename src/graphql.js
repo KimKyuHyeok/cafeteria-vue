@@ -49,6 +49,21 @@ export const GET_COUPONS = gql`
     }
 `
 
+export const GET_COUPONS_BY_USER = gql`
+query {
+    couponsFindByUserId {
+        id
+        name
+        address
+        coupon {
+            count
+            companyId
+            restaurantId
+        }
+    }
+}
+`
+
 export const GET_RESTAURANTS = gql`
     query restaurantFindByAddress($keyword: String!) {
         restaurantFindByAddress(keyword: $keyword) {
@@ -129,6 +144,14 @@ export const DELETE_USER = gql`
         userCompanyDelete(data: $data) {
             success
             message
+        }
+    }
+`
+
+export const GENERATE_QRCODE = gql`
+    query generateQrCode($data: CouponUseDto!) {
+        generateQrCode(data: $data) {
+            url
         }
     }
 `
