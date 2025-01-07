@@ -26,7 +26,6 @@ export default {
             const { data } = await this.$apollo.query({
                 query: GET_COUPONS
             });
-            console.log(data.couponsFindByCompanyId)
 
             this.restaurantWithCoupons = data.couponsFindByCompanyId;
         },
