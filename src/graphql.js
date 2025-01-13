@@ -18,6 +18,15 @@ export const USER_LOGIN = gql`
     }
 `
 
+export const STORE_LOGIN = gql`
+    mutation storeSignin($data: StoreInput!) {
+        storeSignin(data: $data) {
+            accessToken
+            refreshToken
+        }
+    }
+`
+
 export const COMPANY_SIGNUP = gql`
     mutation signup($data: CompanySignupInput!) {
         signup(data: $data) {

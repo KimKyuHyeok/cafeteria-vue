@@ -6,6 +6,25 @@
     <div class="signup-container">
       <button class="signup-tab-btn" @click="signupPage">회원가입</button>
     </div>
+    <div class="store-container">
+      <button class="store-login-btn" @click="openStorePopup()">상점 로그인</button>
+    </div>
+    <div v-if="isStorePopupVisible" class="overlay" @click="closeStorePopup">
+      <div class="store-popup" @click.stop>
+        <form @submit.prevent="storeSubmit">
+          <div>
+            <label for="name">가게 이름</label>
+            <input type="text" id="name" v-model="store.name" placeholder="상점 이름을 입력해주세요."/>
+          </div>
+          <div>
+            <label for="password">비밀번호</label>
+            <input type="password" id="password" v-model="store.password" placeholder="비밀번호를 입력해주세요."/>
+          </div>
+          <button type="submit">로그인</button>
+          <button type="button" @click="closeStorePopup">닫기</button>
+        </form>
+      </div>
+    </div>
 
     <div class="button-container">
       <button class="user-login-btn" @click="openPopup('user')">회원 로그인</button>
@@ -46,7 +65,7 @@
 </template>
 
 <script>
-import { COMPANY_LOGIN, USER_LOGIN } from '@/graphql';
+import { COMPANY_LOGIN, STORE_LOGIN, USER_LOGIN } from '@/graphql';
 import { useMutation } from '@vue/apollo-composable';  // @vue/apollo-composable에서 useMutation을 가져옵니다.
 import { ref } from 'vue';
 import { useRouter } from 'vue-router'; // 라우터 임포트
@@ -55,12 +74,17 @@ export default {
   data() {
     return {
       isPopupVisible: false, // 팝업 표시 여부
+      isStorePopupVisible: false,
       popupType: '', // 팝업 유형 ('user' 또는 'company')
       form: {
         email: '',
         password: '',
         registrationNumber: '', // 기업 로그인용 추가 데이터
       },
+      store: {
+        name: '',
+        password: '',
+      }
     };
   },
   methods: {
@@ -68,9 +92,16 @@ export default {
       this.popupType = type; // 팝업 타입 설정
       this.isPopupVisible = true; // 팝업 열기
     },
+    openStorePopup() {
+      this.isStorePopupVisible = true;
+    },
     closePopup() {
       this.isPopupVisible = false; // 팝업 닫기
       this.form = { email: '', password: '', registrationNumber: '' }; // 폼 초기화
+    },
+    closeStorePopup() {
+      this.isStorePopupVisible = false;
+      this.store = { name: '', password: '' }
     },
     signupPage() {
       this.$router.push('/signup')
@@ -127,6 +158,30 @@ export default {
         console.log(error);
       }
     },
+    async storeSubmit() {
+      try {
+        let token;
+        const { data } = await this.$apollo.mutate({
+          mutation: STORE_LOGIN,
+          variables: {
+            data: {
+              name: this.store.name,
+              password: this.store.password
+            }
+          }
+        })
+
+        token = data.storeSignin.accessToken;
+
+        if (token) {
+          localStorage.setItem('storeToken', token);
+          this.$router.push('/store/qr-reader')
+        }
+      } catch (error) {
+        alert('로그인 정보가 일치하지 않습니다.')
+        console.log(error)
+      }
+    }
   },
 };
 </script>
@@ -204,11 +259,27 @@ export default {
         text-align: center;
     }
 
+    .store-popup {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 500px;
+        text-align: center;
+    }
+    .store-popup h2 {
+      margin-bottom: 20px;
+    }
+
     .popup h2 {
-        margin-bottom: 20px;
+      margin-bottom: 20px;
     }
 
     .popup form div {
+        margin-bottom: 15px;
+    }
+
+    .store-popup form div {
         margin-bottom: 15px;
     }
 
@@ -219,7 +290,23 @@ export default {
         border-radius: 5px;
     }
 
+    .store-popup input {
+        width: 80%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
     .popup button {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    }
+
+    .store-popup button {
     margin: 5px;
     padding: 10px 15px;
     font-size: 14px;
@@ -237,11 +324,21 @@ export default {
         background-color: #f44336;
         color: white;
     }
-    .signup-container {
+
+    .store-popup button[type="submit"] {
+        background-color: #4caf50;
+        color: white;   
+    }
+
+    .store-popup button[type="button"] {
+        background-color: #f44336;
+        color: white;
+    }
+    .signup-container, .store-container {
       text-align: center;
       margin-top: 20px;
     }
-    .signup-tab-btn {
+    .signup-tab-btn, .store-login-btn {
       padding: 10px 20px;
       font-size: 16px;
       border: none;
@@ -250,7 +347,7 @@ export default {
       border-radius: 5px;
       cursor: pointer;
     }
-    .signup-tab-btn:hover {
+    .signup-tab-btn:hover, .store-login-btn {
       background-color: #d35400;
     }
 </style>
