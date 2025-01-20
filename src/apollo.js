@@ -3,7 +3,7 @@ import { createApolloProvider } from '@vue/apollo-option';
 
 // HttpLink를 생성하고 API 엔드포인트를 설정
 const httpLink = new HttpLink({
-  uri: 'http://43.202.42.90/graphql', // GraphQL 서버 URL
+  uri: 'http://api.siggwon-moa.com/graphql', // GraphQL 서버 URL
 });
 
 // 인증 토큰을 헤더에 추가하는 링크 생성
