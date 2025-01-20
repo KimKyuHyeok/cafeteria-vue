@@ -39,7 +39,8 @@ router.beforeEach((to, from, next) => {
     } else if (companyToken) {
       next('/company/restaurant')
       return;
-    } else if (storeToken) {
+    } else if (storeToken || !storeToken) {
+      // 테스트
       next('/store/qr-reader')
       return;
     }
