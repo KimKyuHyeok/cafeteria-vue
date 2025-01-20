@@ -1,0 +1,48 @@
+name: cafeteria-S3
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '20.15.0'
+
+      - name: Npm Install
+        run: npm install
+
+      - name: Create .env File
+        run: |
+          echo "REACT_APP_API_URL=${{ secrets.API_URL }}" >> .env
+
+      - name: Npm Run Build
+        run: npm run build
+
+      - name: Install AWS CLI
+        run: |
+          # 기존 AWS CLI 제거
+          sudo rm -rf /usr/local/aws-cli
+          # AWS CLI 설치
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+
+      - name: Configure AWS Credentials
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws configure set default.region ap-northeast-2  # 서울 리전 설정
+
+      - name: Deploy to S3
+        run: |
+          aws s3 sync ./build/ s3://${{ secrets.S3_BUCKET_NAME }}/ --delete --region ap-northeast-2
