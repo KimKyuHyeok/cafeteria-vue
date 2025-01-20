@@ -36,11 +36,7 @@ export default {
     };
   },
   mounted() {
-    // 모바일 디바이스인지 확인
-
-    // 테스트
-    this.isMobile = true
-    // this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
   },
   methods: {
     onDecode(content) {
