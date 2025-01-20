@@ -13,7 +13,7 @@
 </template>
   
 <script>
-import AddressSelect from '@/components/company/restaurant/AddressSelect.vue';
+import AddressSelect from '@/components/desktop/company/restaurant/AddressSelect.vue';
   
 export default {
     components: {

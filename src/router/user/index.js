@@ -1,4 +1,4 @@
-import UserCoupons from '@/views/user/UserCoupons.vue'
+import UserCoupons from '@/views/desktop/user/UserCoupons.vue'
 
 const userRoutes = [
     {

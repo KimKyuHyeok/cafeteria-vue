@@ -1,10 +1,9 @@
 import { createRouter, createWebHistory } from "vue-router"
-import Login from '@/views/Login.vue'
+import Login from '@/views/desktop/Login.vue'
 import companyRoutes from "./company"
 import userRoutes from "./user"
-import Signup from '@/views/Signup.vue'
+import Signup from '@/views/desktop/Signup.vue'
 
-import CompanyCoupon from '@/views/company/CompanyCoupon.vue'
 import storeRoutes from "./store"
 
 const routes = [

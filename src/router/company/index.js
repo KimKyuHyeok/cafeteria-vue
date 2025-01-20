@@ -1,6 +1,6 @@
-import CompanyCoupon from '@/views/company/CompanyCoupon.vue'
-import CompanyRestaurant from '@/views/company/CompanyRestaurant.vue'
-import CompanyUser from '@/views/company/CompanyUser.vue'
+import CompanyCoupon from '@/views/desktop/company/CompanyCoupon.vue'
+import CompanyRestaurant from '@/views/desktop/company/CompanyRestaurant.vue'
+import CompanyUser from '@/views/desktop/company/CompanyUser.vue'
 
 const companyRoutes = [
     {

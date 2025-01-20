@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import CompanySignup from '@/components/company/CompanySignup.vue';
-import UserSignup from '@/components/user/UserSignup.vue';
+import CompanySignup from '@/components/desktop/company/CompanySignup.vue';
+import UserSignup from '@/components/desktop/user/UserSignup.vue';
 
 export default {
     name: 'Signup',
