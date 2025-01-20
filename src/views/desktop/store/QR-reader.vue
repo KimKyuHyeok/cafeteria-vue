@@ -37,7 +37,7 @@
         // 서버에 QR 코드 데이터 전송 및 검증
         try {
           const response = await this.$apollo.mutate({
-            mutation: VALIDATE_QR_CODE,
+            mutation: null,
             variables: { qrData: content },
           });
           console.log("QR 코드 검증 결과:", response.data);

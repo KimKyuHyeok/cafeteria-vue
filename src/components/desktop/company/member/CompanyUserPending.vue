@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import { GET_USERS_PENDING, APPROVED_USER } from '@/graphql';
+import { GET_USERS_PENDING, APPROVED_USER, REJECTED_USER } from '@/graphql';
 
 export default {
     data() {

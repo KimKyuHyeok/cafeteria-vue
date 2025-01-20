@@ -1,6 +1,5 @@
 <script>
 import UserHeader from '@/components/desktop/user/UserHeader.vue'
-import UserCouponListVue from '@/components/desktop/user/UserCouponList.vue'
 import UserCouponList from '@/components/desktop/user/UserCouponList.vue'
 
 export default {

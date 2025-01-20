@@ -66,20 +66,17 @@
 
 <script>
 import { COMPANY_LOGIN, STORE_LOGIN, USER_LOGIN } from '@/graphql';
-import { useMutation } from '@vue/apollo-composable';  // @vue/apollo-composable에서 useMutation을 가져옵니다.
-import { ref } from 'vue';
-import { useRouter } from 'vue-router'; // 라우터 임포트
 
 export default {
   data() {
     return {
-      isPopupVisible: false, // 팝업 표시 여부
+      isPopupVisible: false,
       isStorePopupVisible: false,
-      popupType: '', // 팝업 유형 ('user' 또는 'company')
+      popupType: '',
       form: {
         email: '',
         password: '',
-        registrationNumber: '', // 기업 로그인용 추가 데이터
+        registrationNumber: '',
       },
       store: {
         name: '',
@@ -89,15 +86,15 @@ export default {
   },
   methods: {
     openPopup(type) {
-      this.popupType = type; // 팝업 타입 설정
-      this.isPopupVisible = true; // 팝업 열기
+      this.popupType = type;
+      this.isPopupVisible = true;
     },
     openStorePopup() {
       this.isStorePopupVisible = true;
     },
     closePopup() {
-      this.isPopupVisible = false; // 팝업 닫기
-      this.form = { email: '', password: '', registrationNumber: '' }; // 폼 초기화
+      this.isPopupVisible = false;
+      this.form = { email: '', password: '', registrationNumber: '' };
     },
     closeStorePopup() {
       this.isStorePopupVisible = false;
@@ -126,7 +123,7 @@ export default {
             }
           })
 
-          token = data.signin.accessToken; // 기업 로그인 후 받은 토큰          
+          token = data.signin.accessToken;        
 
           if (token) {
             localStorage.setItem('companyToken', token);
@@ -143,7 +140,7 @@ export default {
             }
           })
 
-          token = data.userSignin.accessToken; // 기업 로그인 후 받은 토큰
+          token = data.userSignin.accessToken;
 
           if (token) {
             localStorage.setItem('userToken', token);
@@ -187,167 +184,163 @@ export default {
 </script>
 
 <style scoped>
-    .title-name {
-        text-align: center;
-        font-size: 15px;
-    }
-    .button-container {
-        display: flex; /* 버튼을 가로로 배치 */
-        justify-content: center; /* 버튼을 가로 방향 중앙 정렬 */
-        align-items: center; /* 버튼을 세로 방향 중앙 정렬 */
-        height: 100vh; /* 화면 전체 높이 */
-        gap: 50px; /* 버튼 사이 간격 */
-    }
+.title-name {
+  text-align: center;
+  font-size: 15px;
+}
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  gap: 50px;
+}
 
-    /* 회원 로그인 버튼 스타일 */
-    .user-login-btn {
-        width: 250px;
-        height: 250px;
-        background-color: blue;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        font-size: 16px;
-        cursor: pointer;
-    }
+.user-login-btn {
+  width: 250px;
+  height: 250px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    .user-login-btn:hover {
-        background-color: darkblue;
-        box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.5);
-    }
+.user-login-btn:hover {
+  background-color: darkblue;
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.5);
+}
 
-    /* 기업 로그인 버튼 스타일 */
-    .company-login-btn {
-        width: 250px;
-        height: 250px;
-        background-color: green;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        font-size: 16px;
-        cursor: pointer;
-    }
+.company-login-btn {
+  width: 250px;
+  height: 250px;
+  background-color: green;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  font-size: 16px;
+  cursor: pointer;
+}
 
-    .company-login-btn:hover {
-        background-color: darkgreen;
-        box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.5);
-    }
+.company-login-btn:hover {
+  background-color: darkgreen;
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.5);
+}
 
-    /* 팝업 배경 (흐림 효과) */
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-    }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
-    /* 팝업창 스타일 */
-    .popup {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        width: 300px;
-        text-align: center;
-    }
+.popup {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: center;
+}
 
-    .store-popup {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        width: 500px;
-        text-align: center;
-    }
-    .store-popup h2 {
-      margin-bottom: 20px;
-    }
+.store-popup {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  text-align: center;
+}
+.store-popup h2 {
+  margin-bottom: 20px;
+}
 
-    .popup h2 {
-      margin-bottom: 20px;
-    }
+.popup h2 {
+  margin-bottom: 20px;
+}
 
-    .popup form div {
-        margin-bottom: 15px;
-    }
+.popup form div {
+  margin-bottom: 15px;
+}
 
-    .store-popup form div {
-        margin-bottom: 15px;
-    }
+.store-popup form div {
+  margin-bottom: 15px;
+}
 
-    .popup input {
-        width: 80%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
+.popup input {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
 
-    .store-popup input {
-        width: 80%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-    }
+.store-popup input {
+  width: 80%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
 
-    .popup button {
-    margin: 5px;
-    padding: 10px 15px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    }
+.popup button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-    .store-popup button {
-    margin: 5px;
-    padding: 10px 15px;
-    font-size: 14px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    }
+.store-popup button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-    .popup button[type="submit"] {
-        background-color: #4caf50;
-        color: white;   
-    }
+.popup button[type="submit"] {
+  background-color: #4caf50;
+  color: white;   
+}
 
-    .popup button[type="button"] {
-        background-color: #f44336;
-        color: white;
-    }
+.popup button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
 
-    .store-popup button[type="submit"] {
-        background-color: #4caf50;
-        color: white;   
-    }
+.store-popup button[type="submit"] {
+  background-color: #4caf50;
+  color: white;   
+}
 
-    .store-popup button[type="button"] {
-        background-color: #f44336;
-        color: white;
-    }
-    .signup-container, .store-container {
-      text-align: center;
-      margin-top: 20px;
-    }
-    .signup-tab-btn, .store-login-btn {
-      padding: 10px 20px;
-      font-size: 16px;
-      border: none;
-      background-color: #f39c12;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .signup-tab-btn:hover, .store-login-btn {
-      background-color: #d35400;
-    }
+.store-popup button[type="button"] {
+  background-color: #f44336;
+  color: white;
+}
+.signup-container, .store-container {
+  text-align: center;
+  margin-top: 20px;
+}
+.signup-tab-btn, .store-login-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background-color: #f39c12;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.signup-tab-btn:hover, .store-login-btn {
+  background-color: #d35400;
+}
 </style>
