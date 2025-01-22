@@ -1,6 +1,7 @@
 import CompanyCoupon from '@/views/desktop/company/CompanyCoupon.vue'
 import CompanyRestaurant from '@/views/desktop/company/CompanyRestaurant.vue'
 import CompanyUser from '@/views/desktop/company/CompanyUser.vue'
+import CompanyPayments from '@/views/desktop/company/CompanyPayments.vue'
 
 const companyRoutes = [
     {
@@ -19,6 +20,12 @@ const companyRoutes = [
         path: '/company/user',
         name: 'CompanyUser',
         component: CompanyUser,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/company/payment-history',
+        name: 'CompanyPayments',
+        component: CompanyPayments,
         meta: { requiresAuth: true }
     }
 ]
