@@ -164,3 +164,32 @@ export const GENERATE_QRCODE = gql`
         }
     }
 `
+
+export const FIND_COMPANY_LIST = gql`
+    query companyListSearch($keyword: String!) {
+        companyListSearch(keyword: $keyword) {
+            id
+            name
+            registrationNumber
+        }
+    }
+`
+
+export const COMPANY_USER_JOIN_REQUEST = gql`
+    mutation CompanyUserJoinRequest($data: CompanyUserJoinRequestDto!) {
+        companyUserJoinRequest(data: $data) {
+            success
+            message
+        }
+    }
+`
+
+export const SELECT_PAYMENTS = gql`
+    query {
+        selectPayments {
+            orderId
+            amount
+            paymentDate
+        }
+    }
+`
