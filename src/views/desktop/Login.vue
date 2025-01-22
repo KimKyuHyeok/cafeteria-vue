@@ -75,8 +75,8 @@ export default {
       popupType: '',
       form: {
         email: '',
-        password: '',
-        registrationNumber: '',
+        password: 'Test1234@',
+        registrationNumber: '123-456',
       },
       store: {
         name: '',
@@ -144,7 +144,7 @@ export default {
 
           if (token) {
             localStorage.setItem('userToken', token);
-            this.$router.push('/company/restaurant')
+            this.$router.push('/user/coupons')
           }
         }
 
