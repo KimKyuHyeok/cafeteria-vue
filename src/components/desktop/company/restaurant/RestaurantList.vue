@@ -9,6 +9,9 @@
                 <button @click="paymentPage(restaurant.id)">식권 구매</button>
             </div>
         </div>
+        <div v-if="restaurants.length == 0">
+            <h4>검색 된 내용이 없습니다.</h4>
+        </div>
     </div>
 </template>
   

@@ -8,6 +8,9 @@
             <p>잔여 수량: {{ coupon.coupon[0].count }}</p>
             <button @click="useCoupon(coupon.coupon[0].restaurantId, coupon.coupon[0].companyId)" class="use-btn">사용 QR 발급하기</button>
         </div>
+        <div v-if="coupons.length == 0">
+            <h4>잔여 쿠폰이 존재하지 않습니다.</h4>
+        </div>
         </div>
     </div>
 
