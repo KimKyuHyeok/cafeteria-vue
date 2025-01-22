@@ -32,7 +32,7 @@ router.beforeEach((to, from, next) => {
   const userToken = localStorage.getItem('userToken');
   const storeToken = localStorage.getItem('storeToken');
 
-  if (to.path === '/login' || to.path === '/signup') {
+  if (to.path === '/login' || to.path === '/signup' || to.path === '/') {
     if (userToken) {
       next('/user');
       return;
