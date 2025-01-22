@@ -39,11 +39,15 @@ export default {
     },
     methods: {
         async companyUserFindByPending() {
-            const { data } = await this.$apollo.query({
+            try {
+              const { data } = await this.$apollo.query({
                 query: GET_USERS_PENDING
-            });
+              });
 
-            this.pendingUsers = data.userWithCompanyListByPending
+              this.pendingUsers = data.userWithCompanyListByPending
+            } catch (error) {
+              console.log(error)
+            }
         },
         formatDate(date) {
             const d = new Date(date);
