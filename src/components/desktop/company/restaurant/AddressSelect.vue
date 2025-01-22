@@ -57,7 +57,7 @@ export default {
       }
 
       if (this.selectedRegion && this.subRegions) {
-        keyword = this.selectedRegion + '-' + this.selectedSubRegion;
+        keyword = this.selectedRegion + ' ' + this.selectedSubRegion;
       } else if (this.selectedRegion && !this.selectedSubRegion) {
         keyword = this.selectedRegion;
       }
