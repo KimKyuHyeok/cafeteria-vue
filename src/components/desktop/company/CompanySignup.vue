@@ -85,6 +85,7 @@ import { COMPANY_SIGNUP } from '@/graphql';
                 }
                 if (!this.form.registrationNumber.includes('-')) {
                     alert("사업자 등록번호에 하이픈(-)을 포함해야합니다.");
+                    return;
                 }
 
                 const { data } = await this.$apollo.mutate({
