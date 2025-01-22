@@ -4,7 +4,7 @@
       <nav class="menu">
         <ul>
           <li><a href="/user/coupons">식권발급</a></li>
-          <li><a href="/user/company">회사찾기</a></li>
+          <li><a href="/user/search-company">회사찾기</a></li>
           <li><button @click="logout">로그아웃</button></li>
         </ul>
       </nav>
