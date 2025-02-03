@@ -59,11 +59,11 @@ export default {
         const qrData = JSON.parse(content);
         alert("QR Data : ", qrData);
 
-        const response = await this.$apollo.mutate({
+        const { data } = await this.$apollo.mutate({
           mutation: QRCODE_READER,
           variables: { qrData },
         });
-        console.log("QR 코드 검증 결과:", response.data);
+        console.log("QR 코드 검증 결과:", data.couponUse);
       } catch (error) {
         console.error("QR 코드 검증 실패:", error);
       }
