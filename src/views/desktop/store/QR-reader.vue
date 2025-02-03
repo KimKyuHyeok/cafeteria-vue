@@ -41,13 +41,12 @@ export default {
 
     // 카메라 접근 테스트 추가 (권한 확인)
     navigator.mediaDevices.getUserMedia({ video: true })
-      .then(stream => {
-        console.log('카메라 접근 성공');
-        // 카메라 접근 성공 시 추가 작업
-      })
-      .catch(err => {
-        console.error('카메라 접근 실패:', err);
-      });
+    .then(() => {
+      console.log('카메라 접근 성공');
+    })
+    .catch(err => {
+      console.error('카메라 접근 실패:', err);
+    });
   },
   methods: {
     onDecode(content) {
