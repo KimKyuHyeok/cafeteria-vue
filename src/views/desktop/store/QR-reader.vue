@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { QRCODE_READER } from '@/graphql';
 import { QrcodeStream } from "vue-qrcode-reader";
 
 export default {
@@ -55,9 +56,12 @@ export default {
     async validateQrCode(content) {
       // 서버에 QR 코드 데이터 전송 및 검증
       try {
+        const qrData = JSON.parse(content);
+        alert("QR Data : ", qrData);
+
         const response = await this.$apollo.mutate({
-          mutation: null,
-          variables: { qrData: content },
+          mutation: QRCODE_READER,
+          variables: { qrData },
         });
         console.log("QR 코드 검증 결과:", response.data);
       } catch (error) {
