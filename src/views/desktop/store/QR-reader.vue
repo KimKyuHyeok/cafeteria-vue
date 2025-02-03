@@ -38,10 +38,21 @@ export default {
   },
   mounted() {
     this.isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    // 카메라 접근 테스트 추가 (권한 확인)
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        console.log('카메라 접근 성공');
+        // 카메라 접근 성공 시 추가 작업
+      })
+      .catch(err => {
+        console.error('카메라 접근 실패:', err);
+      });
   },
   methods: {
     onDecode(content) {
       // QR 코드 스캔 성공
+      console.log('QR 코드 내용:', content); // content 로그 추가
       this.decodedText = content;
 
       // 서버로 스캔 결과 전송
@@ -50,14 +61,19 @@ export default {
     onInit(promise) {
       // QR 코드 스캐너 초기화
       promise
-        .then(() => console.log("QR 스캐너가 초기화되었습니다."))
-        .catch(error => console.error("QR 스캐너 초기화 실패:", error));
+        .then(() => {
+          console.log("QR 스캐너가 초기화되었습니다.");
+          this.isMobile && console.log('모바일 장치에서 QR 코드 스캔 준비 완료');
+        })
+        .catch(error => {
+          console.error("QR 스캐너 초기화 실패:", error);
+        });
     },
     async validateQrCode(content) {
       // 서버에 QR 코드 데이터 전송 및 검증
       try {
         const qrData = JSON.parse(content);
-        alert("QR Data : ", qrData);
+        console.log("QR Data : ", qrData); // QR 데이터 확인
 
         const { data } = await this.$apollo.mutate({
           mutation: QRCODE_READER,
