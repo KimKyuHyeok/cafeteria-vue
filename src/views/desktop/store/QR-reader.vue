@@ -62,13 +62,11 @@ export default {
         const qrContent = detectedCodes[0].rawValue
         console.log('감지된 QR 코드 내용:', qrContent)
 
-        if (qrContent) {
-          this.decodedText = qrContent
-          this.speakText('확인되었습니다.')
-          await this.validateQrCode(qrContent)
+        this.decodedText = qrContent
+        await this.validateQrCode(qrContent)
+        this.speakText('확인되었습니다.')
+        this.decodedText = ''
 
-          this.decodedText = ''
-        }
       } catch (error) {
         console.error(error)
       }
@@ -132,10 +130,8 @@ export default {
     async validateQrCode(content) {
       try {
 
-        // JSON 문자열을 객체로 파싱
         const qrData = JSON.parse(content);
         
-        // couponId 값을 Int로 변환
         qrData.couponId = parseInt(qrData.couponId);
 
         const { data } = await this.$apollo.mutate({
