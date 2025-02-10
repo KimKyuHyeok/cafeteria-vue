@@ -1,4 +1,5 @@
 <template>
+  <store-header></store-header>
   <div class="qr-reader-container">
     <h1>QR 코드 스캔</h1>
     <div class="container">
@@ -18,12 +19,13 @@
 
 <script>
 import { QrcodeStream } from 'vue-qrcode-reader'
-import { useApolloClient } from '@vue/apollo-composable'
 import { QRCODE_READER } from '@/graphql'
+import StoreHeader from '@/components/desktop/store/StoreHeader.vue'
 
 export default {
   components: {
     QrcodeStream,
+    StoreHeader
   },
   data() {
     return {
@@ -36,9 +38,6 @@ export default {
         height: { min: 360, ideal: 640, max: 1080 },
       },
     }
-  },
-  apollo: {
-    mutate: useApolloClient().mutate,
   },
   mounted() {
     console.log('컴포넌트 마운트됨')
@@ -57,16 +56,34 @@ export default {
       }
     },
     async onDetect(detectedCodes) {
-      if (!detectedCodes || detectedCodes.length === 0) return
+      try {
+        if (!detectedCodes || detectedCodes.length === 0) return
 
-      const qrContent = detectedCodes[0].rawValue
-      console.log('감지된 QR 코드 내용:', qrContent)
+        const qrContent = detectedCodes[0].rawValue
+        console.log('감지된 QR 코드 내용:', qrContent)
 
-      if (qrContent) {
-        this.decodedText = qrContent
-        await this.validateQrCode(qrContent)
+        if (qrContent) {
+          this.decodedText = qrContent
+          this.speakText('확인되었습니다.')
+          await this.validateQrCode(qrContent)
+
+          this.decodedText = ''
+        }
+      } catch (error) {
+        console.error(error)
       }
     },
+    speakText(text) {
+      if (!window.speechSynthesis) {
+        console.warn('브라우저가 음성을 지원하지 않습니다.')
+        return
+      }
+
+      const utterance = new SpeechSynthesisUtterance(text)
+      utterance.lang = 'ko-KR'
+      window.speechSynthesis.speak(utterance)
+    }
+    ,
     onError(err) {
       this.error = `[${err.name}]: `
       switch (err.name) {
@@ -114,8 +131,13 @@ export default {
     },
     async validateQrCode(content) {
       try {
-        const qrData = JSON.parse(content)
-        console.log('QR Data : ', qrData)
+
+        // JSON 문자열을 객체로 파싱
+        const qrData = JSON.parse(content);
+        
+        // couponId 값을 Int로 변환
+        qrData.couponId = parseInt(qrData.couponId);
+
         const { data } = await this.$apollo.mutate({
           mutation: QRCODE_READER,
           variables: { qrData },
