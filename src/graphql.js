@@ -195,7 +195,7 @@ export const SELECT_PAYMENTS = gql`
 `
 
 export const QRCODE_READER = gql`
-    mutation couponUse($qrData: CouponUseDto!) {
+    mutation couponUse($qrData: QrDataDto!) {
         couponUse(qrData: $qrData) {
             success
             message
