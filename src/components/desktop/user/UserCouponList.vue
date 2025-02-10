@@ -18,6 +18,7 @@
         <div class="qr-modal" @click.stop>
             <h3>입장 QR 코드</h3>
             <img :src="qrUrl" alt="QR Code" />
+            <p>창이 {{ countdown }}초 후에 닫힙니다.</p>
             <button @click="closeModal" class="close-btn">취소</button>
         </div>
     </div>
@@ -32,6 +33,7 @@ export default {
             coupons: [],
             qrUrl: '',
             showModal: false,
+            countdown: 60,
         }
     },
     methods: {
@@ -56,10 +58,20 @@ export default {
 
             this.qrUrl = data.generateQrCode.url;
             this.showModal = true;
+
+            const timer = setInterval(() => {
+                if (this.countdown > 0) {
+                    this.countdown -= 1;
+                } else {
+                    clearInterval(timer);
+                    this.closeModal();
+                }
+            }, 1000)
         },
 
         closeModal() {
             this.showModal = false;
+            this.countdown = 60;
         }
     },
     mounted() {
