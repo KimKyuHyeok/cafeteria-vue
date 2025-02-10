@@ -74,13 +74,13 @@ export default {
       isStorePopupVisible: false,
       popupType: '',
       form: {
-        email: '',
-        password: 'Test1234@',
+        email: 'test@naver.com',
+        password: 'Password123@',
         registrationNumber: '123-456',
       },
       store: {
-        name: '',
-        password: '',
+        name: '총총이',
+        password: 'Amji1004@',
       }
     };
   },
