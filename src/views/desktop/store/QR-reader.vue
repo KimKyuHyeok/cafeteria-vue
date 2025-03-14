@@ -12,8 +12,6 @@
         @camera-on="onCameraOn"
       />
     </div>
-    <p v-if="error" style="color: red">{{ error }}</p>
-    <p>스캔 결과: {{ decodedText }}</p>
   </div>
 </template>
 
@@ -25,12 +23,13 @@ import StoreHeader from '@/components/desktop/store/StoreHeader.vue'
 export default {
   components: {
     QrcodeStream,
-    StoreHeader
+    StoreHeader,
   },
   data() {
     return {
       decodedText: '',
       error: '',
+      lastDetectedCode: null,
       isMobile: false,
       selectedConstraints: {
         facingMode: 'environment',
@@ -58,15 +57,17 @@ export default {
     async onDetect(detectedCodes) {
       try {
         if (!detectedCodes || detectedCodes.length === 0) return
-
         const qrContent = detectedCodes[0].rawValue
-        console.log('감지된 QR 코드 내용:', qrContent)
 
-        this.decodedText = qrContent
-        await this.validateQrCode(qrContent)
-        this.speakText('확인되었습니다.')
-        this.decodedText = ''
+        if (this.lastDetectedCode !== qrContent) {
+          this.decodedText = qrContent
+          await this.validateQrCode(qrContent)
+          this.speakText('확인되었습니다.')
 
+          this.lastDetectedCode = qrContent
+        } else {
+          console.log('이미 사용한 코드입니다.')
+        }
       } catch (error) {
         console.error(error)
       }
@@ -80,8 +81,7 @@ export default {
       const utterance = new SpeechSynthesisUtterance(text)
       utterance.lang = 'ko-KR'
       window.speechSynthesis.speak(utterance)
-    }
-    ,
+    },
     onError(err) {
       this.error = `[${err.name}]: `
       switch (err.name) {
@@ -129,10 +129,9 @@ export default {
     },
     async validateQrCode(content) {
       try {
+        const qrData = JSON.parse(content)
 
-        const qrData = JSON.parse(content);
-        
-        qrData.couponId = parseInt(qrData.couponId);
+        qrData.couponId = parseInt(qrData.couponId)
 
         const { data } = await this.$apollo.mutate({
           mutation: QRCODE_READER,

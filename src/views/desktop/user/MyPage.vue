@@ -1,12 +1,12 @@
 <script>
 import UserHeader from '@/components/desktop/user/UserHeader.vue'
-import UserCouponList from '@/components/desktop/user/UserCouponList.vue'
+import MyInfo from '@/components/desktop/user/MyInfo.vue'
 
 export default {
   name: 'UserCoupons',
   components: {
     UserHeader,
-    UserCouponList,
+    MyInfo,
   },
 }
 </script>
@@ -15,5 +15,5 @@ export default {
   <header>
     <UserHeader />
   </header>
-  <user-coupon-list />
+  <MyInfo />
 </template>

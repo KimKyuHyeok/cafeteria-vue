@@ -19,7 +19,7 @@
           <td>{{ user.status === 'REJECTED' ? '승인거절' : user.status }}</td>
           <td>{{ formatDate(user.updatedAt) }}</td>
           <td>
-              <button @click="deleteUser(user.companyUserId, user.id)">삭제</button>
+            <button @click="deleteUser(user.companyUserId, user.id)">삭제</button>
           </td>
         </tr>
       </tbody>
@@ -28,98 +28,98 @@
 </template>
 
 <script>
-import { GET_USERS_REJECTED, DELETE_USER } from '@/graphql';
+import { GET_USERS_REJECTED, DELETE_USER } from '@/graphql'
 
 export default {
   data() {
-      return {
-          rejectedUsers: []
-      }
-  },
-  methods: {
-      async companyUserFindByRejected() {
-          const { data } = await this.$apollo.query({
-              query: GET_USERS_REJECTED
-          });
-
-          this.rejectedUsers = data.userWithCompanyListByRejected
-      },
-      formatDate(date) {
-          const d = new Date(date);
-          const year = d.getFullYear();
-          const month = String(d.getMonth() + 1).padStart(2, '0');
-          const day = String(d.getDate()).padStart(2, '0');
-          return `${year}년 ${month}월 ${day}일`;
-      },
-      async deleteUser(id, userId) {
-          try {
-              const { data } = await this.$apollo.mutate({
-                  mutation: DELETE_USER,
-                  variables: {
-                      data: { id, userId }
-                  }
-              })
-
-              alert(data.userCompanyDelete.message);
-              location.reload();
-          } catch (error) {
-              console.error(error);
-              alert('에러가 발생했습니다.')
-          }
-      }
+    return {
+      rejectedUsers: [],
+    }
   },
   mounted() {
-      this.companyUserFindByRejected();
-  }
+    this.companyUserFindByRejected()
+  },
+  methods: {
+    async companyUserFindByRejected() {
+      const { data } = await this.$apollo.query({
+        query: GET_USERS_REJECTED,
+      })
+
+      this.rejectedUsers = data.userWithCompanyListByRejected
+    },
+    formatDate(date) {
+      const d = new Date(date)
+      const year = d.getFullYear()
+      const month = String(d.getMonth() + 1).padStart(2, '0')
+      const day = String(d.getDate()).padStart(2, '0')
+      return `${year}년 ${month}월 ${day}일`
+    },
+    async deleteUser(id, userId) {
+      try {
+        const { data } = await this.$apollo.mutate({
+          mutation: DELETE_USER,
+          variables: {
+            data: { id, userId },
+          },
+        })
+
+        alert(data.userCompanyDelete.message)
+        location.reload()
+      } catch (error) {
+        console.error(error)
+        alert('에러가 발생했습니다.')
+      }
+    },
+  },
 }
 </script>
 
 <style scoped>
 .user-table-container {
-margin: 20px;
-padding: 20px;
-background-color: #f9f9f9;
-border-radius: 8px;
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .user-table {
-width: 100%;
-border-collapse: collapse;
-text-align: left;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
 }
 
 .user-table th,
 .user-table td {
-padding: 12px;
-border: 1px solid #ddd;
+  padding: 12px;
+  border: 1px solid #ddd;
 }
 
 .user-table th {
-background-color: #007bff;
-color: white;
-font-weight: bold;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
 }
 
 .user-table tr:nth-child(even) {
-background-color: #f2f2f2;
+  background-color: #f2f2f2;
 }
 
 .user-table tr:hover {
-background-color: #e9ecef;
+  background-color: #e9ecef;
 }
 
 .user-table td {
-font-size: 14px;
-color: #333;
+  font-size: 14px;
+  color: #333;
 }
 
 .user-table th,
 .user-table td {
-text-align: center;
+  text-align: center;
 }
 
 .user-table td {
-vertical-align: middle;
+  vertical-align: middle;
 }
 </style>
