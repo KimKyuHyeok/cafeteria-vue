@@ -104,8 +104,6 @@ export default {
             }
           })
 
-          console.log("RESULT : ", response)
-
           token = response.data.userSignin.accessToken;
 
           if (token) {
