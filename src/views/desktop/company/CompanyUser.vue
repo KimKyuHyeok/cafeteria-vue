@@ -5,23 +5,23 @@ import CompanyUserPendingVue from '@/components/desktop/company/member/CompanyUs
 import CompanyUserRejectedVue from '@/components/desktop/company/member/CompanyUserRejected.vue'
 
 export default {
-    name: 'CompanyUser',
-    components: {
-        CompanyHeaderVue,
-        CompanyUserApprovedVue,
-        CompanyUserPendingVue,
-        CompanyUserRejectedVue
-    },
-    data() {
-        return {
-            selectedTab: 'approved',
-        };
-    },
-    methods: {
-        switchTab(tab) {
-            this.selectedTab = tab;
-        }
+  name: 'CompanyUser',
+  components: {
+    CompanyHeaderVue,
+    CompanyUserApprovedVue,
+    CompanyUserPendingVue,
+    CompanyUserRejectedVue,
+  },
+  data() {
+    return {
+      selectedTab: 'approved',
     }
+  },
+  methods: {
+    switchTab(tab) {
+      this.selectedTab = tab
+    },
+  },
 }
 </script>
 
@@ -32,24 +32,9 @@ export default {
     </header>
 
     <div class="tab-buttons">
-      <span
-        @click="switchTab('pending')"
-        :class="{ active: selectedTab === 'pending' }"
-      >
-        승인요청목록
-      </span>
-      <span
-        @click="switchTab('approved')"
-        :class="{ active: selectedTab === 'approved' }"
-      >
-        승인완료목록
-      </span>
-      <span
-        @click="switchTab('rejected')"
-        :class="{ active: selectedTab === 'rejected' }"
-      >
-        승인거절목록
-      </span>
+      <span :class="{ active: selectedTab === 'pending' }" @click="switchTab('pending')"> 승인요청목록 </span>
+      <span :class="{ active: selectedTab === 'approved' }" @click="switchTab('approved')"> 승인완료목록 </span>
+      <span :class="{ active: selectedTab === 'rejected' }" @click="switchTab('rejected')"> 승인거절목록 </span>
     </div>
 
     <CompanyUserApprovedVue v-if="selectedTab === 'approved'" />
@@ -70,7 +55,9 @@ export default {
   cursor: pointer;
   font-size: 16px;
   padding: 10px 20px;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 .tab-buttons span.active {

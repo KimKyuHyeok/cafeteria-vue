@@ -1,20 +1,19 @@
 <template>
-    <header class="header">
-        <div id="logo"><h1>식권모아</h1></div>
-        <nav class="menu">
-            <ul>
-                <li><button @click="logout">로그아웃</button></li>
-            </ul>
-        </nav>
-    </header>
-    
+  <header class="header">
+    <div id="logo"><h1>식권모아</h1></div>
+    <nav class="menu">
+      <ul>
+        <li><button @click="logout">로그아웃</button></li>
+      </ul>
+    </nav>
+  </header>
 </template>
 
 <script setup>
 const logout = () => {
-    alert('로그아웃 되었습니다.');
-    localStorage.removeItem('storeToken');
-    window.location.href = '/login';
+  alert('로그아웃 되었습니다.')
+  localStorage.removeItem('storeToken')
+  window.location.href = '/login'
 }
 </script>
 

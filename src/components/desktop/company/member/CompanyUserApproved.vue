@@ -1,73 +1,73 @@
 <template>
-    <div class="user-table-container">
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th>이름</th>
-            <th>전화번호</th>
-            <th>이메일</th>
-            <th>상태</th>
-            <th>승인일</th>
-            <th>기타</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in approvedUsers" :key="user.id">
-            <td>{{ user.name }}</td>
-            <td>{{ user.phoneNumber }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.status === 'APPROVED' ? '승인완료' : user.status }}</td>
-            <td>{{ formatDate(user.updatedAt) }}</td>
-            <td>
-              <button @click="deleteUser(user.companyUserId, user.id)">탈퇴</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="user-table-container">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>전화번호</th>
+          <th>이메일</th>
+          <th>상태</th>
+          <th>승인일</th>
+          <th>기타</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in approvedUsers" :key="user.id">
+          <td>{{ user.name }}</td>
+          <td>{{ user.phoneNumber }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.status === 'APPROVED' ? '승인완료' : user.status }}</td>
+          <td>{{ formatDate(user.updatedAt) }}</td>
+          <td>
+            <button @click="deleteUser(user.companyUserId, user.id)">탈퇴</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
-import { DELETE_USER, GET_USERS_APPROVED } from '@/graphql';
+import { DELETE_USER, GET_USERS_APPROVED } from '@/graphql'
 
 export default {
-    data() {
-        return {
-            approvedUsers: []
-        }
-    },
-    methods: {
-        async companyUserFindByApproved() {
-            const { data } = await this.$apollo.query({
-                query: GET_USERS_APPROVED
-            });
-
-            this.approvedUsers = data.userWithCompanyListByApproved
-        },
-        formatDate(date) {
-            const d = new Date(date);
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            return `${year}년 ${month}월 ${day}일`;
-        },
-        async deleteUser(id, userId) {
-            const confirmed = window.confirm("정말로 탈퇴하시겠습니까?");
-        
-            if (confirmed) {
-              const { data } = await this.$apollo.mutate({
-                mutation: DELETE_USER,
-                variables: { data: { id, userId }}
-              })
-
-              alert(data.userCompanyDelete.message);
-              location.reload();
-            }
-        }
-    },
-    mounted() {
-        this.companyUserFindByApproved();
+  data() {
+    return {
+      approvedUsers: [],
     }
+  },
+  mounted() {
+    this.companyUserFindByApproved()
+  },
+  methods: {
+    async companyUserFindByApproved() {
+      const { data } = await this.$apollo.query({
+        query: GET_USERS_APPROVED,
+      })
+
+      this.approvedUsers = data.userWithCompanyListByApproved
+    },
+    formatDate(date) {
+      const d = new Date(date)
+      const year = d.getFullYear()
+      const month = String(d.getMonth() + 1).padStart(2, '0')
+      const day = String(d.getDate()).padStart(2, '0')
+      return `${year}년 ${month}월 ${day}일`
+    },
+    async deleteUser(id, userId) {
+      const confirmed = window.confirm('정말로 탈퇴하시겠습니까?')
+
+      if (confirmed) {
+        const { data } = await this.$apollo.mutate({
+          mutation: DELETE_USER,
+          variables: { data: { id, userId } },
+        })
+
+        alert(data.userCompanyDelete.message)
+        location.reload()
+      }
+    },
+  },
 }
 </script>
 

@@ -1,97 +1,97 @@
 <template>
-    <div class="user-table-container">
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th>이름</th>
-            <th>전화번호</th>
-            <th>이메일</th>
-            <th>상태</th>
-            <th>요청일</th>
-            <th>기타</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="user in pendingUsers" :key="user.id">
-            <td>{{ user.name }}</td>
-            <td>{{ user.phoneNumber }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.status === 'PENDING' ? '승인대기중' : user.status }}</td>
-            <td>{{ formatDate(user.createdAt) }}</td>
-            <td>
-                <button @click="approvedUser(user.id, user.name, user.email)">승인</button>
-                <button @click="rejectedUser(user.id, user.name, user.email)">거절</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="user-table-container">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th>이름</th>
+          <th>전화번호</th>
+          <th>이메일</th>
+          <th>상태</th>
+          <th>요청일</th>
+          <th>기타</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="user in pendingUsers" :key="user.id">
+          <td>{{ user.name }}</td>
+          <td>{{ user.phoneNumber }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.status === 'PENDING' ? '승인대기중' : user.status }}</td>
+          <td>{{ formatDate(user.createdAt) }}</td>
+          <td>
+            <button @click="approvedUser(user.id, user.name, user.email)">승인</button>
+            <button @click="rejectedUser(user.id, user.name, user.email)">거절</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
-import { GET_USERS_PENDING, APPROVED_USER, REJECTED_USER } from '@/graphql';
+import { GET_USERS_PENDING, APPROVED_USER, REJECTED_USER } from '@/graphql'
 
 export default {
-    data() {
-        return {
-            pendingUsers: []
-        }
-    },
-    methods: {
-        async companyUserFindByPending() {
-            try {
-              const { data } = await this.$apollo.query({
-                query: GET_USERS_PENDING
-              });
-
-              this.pendingUsers = data.userWithCompanyListByPending
-            } catch (error) {
-              console.log(error)
-            }
-        },
-        formatDate(date) {
-            const d = new Date(date);
-            const year = d.getFullYear();
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            return `${year}년 ${month}월 ${day}일`;
-        },
-        async approvedUser(userId, name, email) {
-            try {
-                const { data } = await this.$apollo.mutate({
-                    mutation: APPROVED_USER,
-                    variables: {
-                        data: { userId, name, email }
-                    }
-                })
-
-                alert(data.userApproved.message);
-                location.reload();
-            } catch (error) {
-                console.error(error);
-                alert('에러가 발생했습니다.')
-            }
-        },
-        async rejectedUser(userId, name, email) {
-            try {
-                const { data } = await this.$apollo.mutate({
-                    mutation: REJECTED_USER,
-                    variables: {
-                        data: { userId, name, email }
-                    }
-                })
-
-                alert(data.userRejected.message);
-                location.reload();
-            } catch (error) {
-                console.error(error);
-                alert('에러가 발생했습니다.')
-            }
-        }
-    },
-    mounted() {
-        this.companyUserFindByPending();
+  data() {
+    return {
+      pendingUsers: [],
     }
+  },
+  mounted() {
+    this.companyUserFindByPending()
+  },
+  methods: {
+    async companyUserFindByPending() {
+      try {
+        const { data } = await this.$apollo.query({
+          query: GET_USERS_PENDING,
+        })
+
+        this.pendingUsers = data.userWithCompanyListByPending
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    formatDate(date) {
+      const d = new Date(date)
+      const year = d.getFullYear()
+      const month = String(d.getMonth() + 1).padStart(2, '0')
+      const day = String(d.getDate()).padStart(2, '0')
+      return `${year}년 ${month}월 ${day}일`
+    },
+    async approvedUser(userId, name, email) {
+      try {
+        const { data } = await this.$apollo.mutate({
+          mutation: APPROVED_USER,
+          variables: {
+            data: { userId, name, email },
+          },
+        })
+
+        alert(data.userApproved.message)
+        location.reload()
+      } catch (error) {
+        console.error(error)
+        alert('에러가 발생했습니다.')
+      }
+    },
+    async rejectedUser(userId, name, email) {
+      try {
+        const { data } = await this.$apollo.mutate({
+          mutation: REJECTED_USER,
+          variables: {
+            data: { userId, name, email },
+          },
+        })
+
+        alert(data.userRejected.message)
+        location.reload()
+      } catch (error) {
+        console.error(error)
+        alert('에러가 발생했습니다.')
+      }
+    },
+  },
 }
 </script>
 
