@@ -3,7 +3,7 @@
     <div class="search-bar">
       <form @submit.prevent="searchSubmit">
         <label for="keyword">기업명</label>
-        <input type="text" name="keyword" v-model="keyword"/>
+        <input v-model="keyword" type="text" name="keyword" />
         <button type="submit" class="submit-btn">검색</button>
       </form>
     </div>
@@ -21,9 +21,9 @@
 
     <!-- 페이지네이션 버튼 -->
     <div class="pagination">
-      <button @click="prevPage" :disabled="currentPage === 1">이전</button>
+      <button :disabled="currentPage === 1" @click="prevPage">이전</button>
       <span>{{ currentPage }} / {{ totalPages }}</span>
-      <button @click="nextPage" :disabled="currentPage >= totalPages">다음</button>
+      <button :disabled="currentPage >= totalPages" @click="nextPage">다음</button>
     </div>
   </div>
 </template>
@@ -57,7 +57,7 @@ export default {
               keyword: this.keyword,
               skip: (this.currentPage - 1) * this.pageSize,
               take: this.pageSize,
-            }
+            },
           },
         })
 
@@ -65,7 +65,7 @@ export default {
 
         this.totalPages = Math.ceil(data.companyListSearch.totalCount / this.pageSize)
       } catch (error) {
-        console.error("ERROR LOGS : ", error);
+        console.error('ERROR LOGS : ', error)
       }
     },
 
@@ -89,16 +89,16 @@ export default {
         }
       } catch (error) {
         if (error instanceof ApolloError) {
-        if (error.message === '이미 신청했거나 승인거절 상태입니다.') {
-          alert('이미 신청했거나 승인거절 상태입니다.')
+          if (error.message === '이미 신청했거나 승인거절 상태입니다.') {
+            alert('이미 신청했거나 승인거절 상태입니다.')
+          } else {
+            console.error('알 수 없는 ApolloError:', error.message)
+            alert('에러가 발생했습니다.')
+          }
         } else {
-          console.error('알 수 없는 ApolloError:', error.message)
-          alert('에러가 발생했습니다.')
+          console.error('기타 에러:', error)
+          alert('기타 에러가 발생했습니다.')
         }
-      } else {
-        console.error('기타 에러:', error)
-        alert('기타 에러가 발생했습니다.')
-      }
       }
     },
 
