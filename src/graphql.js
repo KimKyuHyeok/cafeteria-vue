@@ -27,22 +27,6 @@ export const STORE_LOGIN = gql`
     }
 `
 
-export const COMPANY_SIGNUP = gql`
-    mutation signup($data: CompanySignupInput!) {
-        signup(data: $data) {
-            accessToken
-        }
-    }
-`
-
-export const USER_SIGNUP = gql`
-    mutation userSignup($data: UserSignupInput!) {
-        userSignup(data: $data) {
-            accessToken
-        }
-    }
-`
-
 export const GET_COUPONS = gql`
     query {
         couponsFindByCompanyId {
@@ -199,6 +183,62 @@ export const QRCODE_READER = gql`
         couponUse(qrData: $qrData) {
             success
             message
+        }
+    }
+`
+
+// refactor
+
+export const USER_SIGNIN = gql`
+    mutation userSignin($data: UserSigninInput!) {
+        userSignin(data: $data) {
+            accessToken
+            refreshToken
+        }
+    }
+`
+
+export const USER_SIGNUP = gql`
+    mutation userSignup($data: UserSignupInput!) {
+        userSignup(data: $data) {
+            accessToken
+            refreshToken
+        }
+    }
+`
+
+export const COMPANY_SIGNIN = gql`
+    mutation companySignin($data: CompanySigninInput!) {
+        companySignin(data: $data) {
+            accessToken
+            refreshToken
+        }
+    }
+`
+
+export const COMPANY_SIGNUP = gql`
+    mutation companySignup($data: CompanySignupInput!) {
+        companySignup(data: $data) {
+            accessToken
+            refreshToken
+        }
+    }
+`
+
+export const STORE_SIGNIN = gql`
+    mutation storeSignin($data: StoreInput!) {
+        storeSignin(data: $data) {
+            accessToken
+            refreshToken
+        }
+    }
+`
+
+export const STORE_SIGNUP = gql`
+    mutation storeSignup($data: StoreInput!) {
+        storeSignup(data: $data) {
+            accessToken
+            refreshToken
         }
     }
 `

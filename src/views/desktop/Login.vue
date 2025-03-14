@@ -1,346 +1,269 @@
 <template>
-  <div class="title-name">
+  <header>
     <h2>식권모아</h2>
-  </div>
-  <div>
-    <div class="signup-container">
-      <button class="signup-tab-btn" @click="signupPage">회원가입</button>
-    </div>
-    <div class="store-container">
-      <button class="store-login-btn" @click="openStorePopup()">상점 로그인</button>
-    </div>
-    <div v-if="isStorePopupVisible" class="overlay" @click="closeStorePopup">
-      <div class="store-popup" @click.stop>
-        <form @submit.prevent="storeSubmit">
-          <div>
-            <label for="name">가게 이름</label>
-            <input type="text" id="name" v-model="store.name" placeholder="상점 이름을 입력해주세요."/>
-          </div>
-          <div>
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" v-model="store.password" placeholder="비밀번호를 입력해주세요."/>
-          </div>
-          <button type="submit">로그인</button>
-          <button type="button" @click="closeStorePopup">닫기</button>
-        </form>
+  </header>
+
+  <div id="login-container">
+    <div id="switch-tab">
+      <div class="user-login">
+        <span
+          @click="switchTab('user-login')"
+          :class="{ active: selectedTab === 'user-login'}"
+        >유저 로그인</span>
+      </div>
+
+      <div class="company-login">
+        <span
+          @click="switchTab('company-login')"
+          :class="{ active: selectedTab === 'company-login'}"
+          >기업 로그인</span>
+      </div>
+
+      <div class="store-login">
+        <span
+          @click="switchTab('store-login')"
+          :class="{ active: selectedTab === 'store-login'}"
+        >상점 로그인</span>
       </div>
     </div>
 
-    <div class="button-container">
-      <button class="user-login-btn" @click="openPopup('user')">회원 로그인</button>
-      <button class="company-login-btn" @click="openPopup('company')">기업 로그인</button>
-    </div>
-
-
-    <!-- 팝업 배경 -->
-    <div v-if="isPopupVisible" class="overlay" @click="closePopup">
-      <!-- 팝업창 -->
-      <div class="popup" @click.stop>
-        <h2>{{ popupType === 'user' ? '회원 로그인' : '기업 로그인' }}</h2>
-        <form @submit.prevent="handleSubmit">
-          <!-- 회원 로그인 -->
-          <div v-if="popupType === 'user'">
-            <label for="email">이메일</label>
-            <input type="text" id="email" v-model="form.email" placeholder="이메일 입력" />
-          </div>
-
-          <!-- 기업 로그인: 사업자등록번호 -->
-          <div v-if="popupType === 'company'">
-            <label for="registrationNumber">사업자등록번호</label>
-            <input type="text" id="registrationNumber" v-model="form.registrationNumber" placeholder="사업자등록번호 입력" />
-          </div>
-
-          <!-- 공통: 비밀번호 입력 -->
-          <div v-if="popupType === 'user' || popupType === 'company'">
-            <label for="password">비밀번호</label>
-            <input type="password" id="password" v-model="form.password" placeholder="비밀번호 입력" />
-          </div>
-
-          <button type="submit">로그인</button>
-          <button type="button" @click="closePopup">닫기</button>
-        </form>
+    <form id="login" @submit.prevent="loginBtn">
+      <div v-if="selectedTab === 'user-login'" class="user-login-input">
+        <label for="user-email">유저 아이디</label>
+        <input type="text" v-model="user.email" id="user-email" placeholder="이메일을 입력하세요." required>
+        <label for="user-password">패스워드</label>
+        <input type="password" v-model="user.password" id="user-password" placeholder="비밀번호를 입력하세요." required>
       </div>
+
+      <div v-if="selectedTab === 'company-login'" class="company-login-input">
+        <label for="company-email">기업 아이디</label>
+        <input type="text" v-model="company.email" id="company-email" placeholder="이메일을 입력하세요." required>
+        <label for="company-password">패스워드</label>
+        <input type="password" v-model="company.password" id="company-password" placeholder="비밀번호를 입력하세요." required>
+      </div>
+
+      <div v-if="selectedTab === 'store-login'" class="store-login-input">
+        <label for="store-email">상점 아이디</label>
+        <input type="text" v-model="store.email" id="store-email" placeholder="이메일을 입력하세요." required>
+        <label for="store-password">패스워드</label>
+        <input type="password" v-model="store.password" id="store-password" placeholder="비밀번호를 입력하세요." required>
+      </div>
+
+      <button type="submit">로그인</button>
+    </form>
+
+    <div id="links-container">
+      <a href="#">아이디/비밀번호 찾기</a>
+      <a href="#">회원가입</a>
     </div>
+
+
   </div>
 </template>
 
 <script>
-import { COMPANY_LOGIN, STORE_LOGIN, USER_LOGIN } from '@/graphql';
+import { COMPANY_SIGNIN, STORE_SIGNIN, USER_SIGNIN } from '@/graphql';
 
 export default {
+  name: '',
   data() {
     return {
-      isPopupVisible: false,
-      isStorePopupVisible: false,
-      popupType: '',
-      form: {
-        email: 'test@naver.com',
-        password: 'Password123@',
-        registrationNumber: '123-456',
+      selectedTab: 'user-login',
+      user: {
+        email: '',
+        password: ''
+      },
+      company: {
+        email: '',
+        password: ''
       },
       store: {
-        name: '총총이',
-        password: 'Amji1004@',
+        email: '',
+        password: ''
       }
-    };
+    }
   },
   methods: {
-    openPopup(type) {
-      this.popupType = type;
-      this.isPopupVisible = true;
+    switchTab(tab) {
+      this.selectedTab = tab;
     },
-    openStorePopup() {
-      this.isStorePopupVisible = true;
-    },
-    closePopup() {
-      this.isPopupVisible = false;
-      this.form = { email: '', password: '', registrationNumber: '' };
-    },
-    closeStorePopup() {
-      this.isStorePopupVisible = false;
-      this.store = { name: '', password: '' }
-    },
-    signupPage() {
-      this.$router.push('/signup')
-    },
-    async handleSubmit() {
+    async loginBtn() {
+      let response;
+      let token;
+
       try {
-        let token;
-
-        if (this.popupType === 'company') {
-          if (!this.form.registrationNumber) {
-            alert('사업자등록번호를 입력해주세요.');
-            return;
-          }
-
-          const { data } = await this.$apollo.mutate({
-            mutation: COMPANY_LOGIN,
+        switch (this.selectedTab) {
+        case 'user-login':
+          response = await this.$apollo.mutate({
+            mutation: USER_SIGNIN,
             variables: {
               data: {
-                registrationNumber: this.form.registrationNumber,
-                password: this.form.password
+                email: this.user.email,
+                password: this.user.password
               }
             }
           })
 
-          token = data.signin.accessToken;        
+          console.log("RESULT : ", response)
 
-          if (token) {
-            localStorage.setItem('companyToken', token);
-            this.$router.push('/company/restaurant')
-          }
-        } else if (this.popupType === 'user') {
-          const { data } = await this.$apollo.mutate({
-            mutation: USER_LOGIN,
-            variables: {
-              data: {
-                email: this.form.email,
-                password: this.form.password
-              }
-            }
-          })
-
-          token = data.userSignin.accessToken;
+          token = response.data.userSignin.accessToken;
 
           if (token) {
             localStorage.setItem('userToken', token);
             this.$router.push('/user/coupons')
           }
-        }
-
-
-
-      } catch (error) {
-        alert('로그인 정보가 일치하지 않습니다.');
-        console.log(error);
-      }
-    },
-    async storeSubmit() {
-      try {
-        let token;
-        const { data } = await this.$apollo.mutate({
-          mutation: STORE_LOGIN,
-          variables: {
-            data: {
-              name: this.store.name,
-              password: this.store.password
+          break;
+        case 'company-login':
+          response = await this.$apollo.mutate({
+            mutation: COMPANY_SIGNIN,
+            variables: {
+              data: {
+                email: this.company.email,
+                password: this.company.password
+              }
             }
+          })
+
+          token = response.data.companySignin.accessToken;
+
+          if (token) {
+            localStorage.setItem('companyToken', token);
+            this.$router.push('/company/restaurant')
           }
-        })
+          break;
+        case 'store-login':
+          response = await this.$apollo.mutate({
+            mutation: STORE_SIGNIN,
+            variables: {
+              data: {
+                email: this.store.email,
+                password: this.store.password
+              }
+            }
+          })
 
-        token = data.storeSignin.accessToken;
+          token = response.data.storeSignin.accessToken;
 
-        if (token) {
-          localStorage.setItem('storeToken', token);
-          this.$router.push('/store/qr-reader')
+          if (token) {
+            localStorage.setItem('storeToken', token);
+            this.$router.push('/store/qr-reader')
+          }
+          break;
+        default:
+          console.error('Login Type error : ', this.switchTab)
+          return;
         }
       } catch (error) {
-        alert('로그인 정보가 일치하지 않습니다.')
-        console.log(error)
+        if (error.graphQLErrors[0]) {
+          alert(error.graphQLErrors[0].message);
+          return;
+        }
+          console.error('GraphQL Error:', error);
+          console.error('Network Error:', error.networkError);
       }
     }
-  },
-};
+  }
+}
 </script>
 
 <style scoped>
-.title-name {
-  text-align: center;
-  font-size: 15px;
-}
-.button-container {
+#switch-tab {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  gap: 50px;
 }
 
-.user-login-btn {
-  width: 250px;
-  height: 250px;
-  background-color: blue;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  font-size: 16px;
+header {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-bottom: 2px solid #ddd;
+}
+
+#login-container {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#switch-tab {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ddd;
+}
+
+#switch-tab div {
+  flex: 1;
+  text-align: center;
+  padding: 10px;
   cursor: pointer;
+  font-weight: bold;
+  color: #666;
+  transition: all 0.3s ease;
 }
 
-.user-login-btn:hover {
-  background-color: darkblue;
-  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.5);
+#switch-tab div span.active {
+  color: #007bff;
+  border-bottom: 3px solid #007bff;
+  padding-bottom: 5px;
 }
 
-.company-login-btn {
-  width: 250px;
-  height: 250px;
-  background-color: green;
-  color: white;
-  border: none;
+#login {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+}
+
+input {
+  width: calc(100% - 1px);
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
   border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  font-size: 16px;
-  cursor: pointer;
+  box-sizing: border-box;
 }
 
-.company-login-btn:hover {
-  background-color: darkgreen;
-  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.5);
-}
-
-.overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
+button {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.popup {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  text-align: center;
-}
-
-.store-popup {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  width: 500px;
-  text-align: center;
-}
-.store-popup h2 {
-  margin-bottom: 20px;
-}
-
-.popup h2 {
-  margin-bottom: 20px;
-}
-
-.popup form div {
-  margin-bottom: 15px;
-}
-
-.store-popup form div {
-  margin-bottom: 15px;
-}
-
-.popup input {
-  width: 80%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.store-popup input {
-  width: 80%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-}
-
-.popup button {
-  margin: 5px;
-  padding: 10px 15px;
-  font-size: 14px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.store-popup button {
-  margin: 5px;
-  padding: 10px 15px;
-  font-size: 14px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.popup button[type="submit"] {
-  background-color: #4caf50;
-  color: white;   
-}
-
-.popup button[type="button"] {
-  background-color: #f44336;
-  color: white;
-}
-
-.store-popup button[type="submit"] {
-  background-color: #4caf50;
-  color: white;   
-}
-
-.store-popup button[type="button"] {
-  background-color: #f44336;
-  color: white;
-}
-.signup-container, .store-container {
-  text-align: center;
+  padding: 12px;
   margin-top: 20px;
-}
-.signup-tab-btn, .store-login-btn {
-  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
   font-size: 16px;
   border: none;
-  background-color: #f39c12;
-  color: white;
   border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
-.signup-tab-btn:hover, .store-login-btn {
-  background-color: #d35400;
+
+button:hover {
+  background-color: #0056b3;
 }
+
+#links-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+#links-container a {
+  color: #007bff;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+#links-container a:hover {
+  color: #0056b3;
+}
+
 </style>
