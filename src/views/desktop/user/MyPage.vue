@@ -3,7 +3,7 @@ import UserHeader from '@/components/desktop/user/UserHeader.vue'
 import MyInfo from '@/components/desktop/user/MyInfo.vue'
 
 export default {
-  name: 'UserCoupons',
+  name: 'UserMyPage',
   components: {
     UserHeader,
     MyInfo,
