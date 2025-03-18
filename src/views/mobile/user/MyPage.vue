@@ -1,6 +1,6 @@
 <script>
-import UserHeader from '@/components/desktop/user/UserHeader.vue'
-import MyInfo from '@/components/desktop/user/MyInfo.vue'
+import UserHeader from '@/components/mobile/user/UserHeader.vue'
+import MyInfo from '@/components/mobile/user/MyInfo.vue'
 
 export default {
   name: 'UserMyPage',

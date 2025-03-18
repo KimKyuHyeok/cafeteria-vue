@@ -270,3 +270,9 @@ export const USER_INFO_UPDATE = gql`
     }
   }
 `
+
+export const VALIDATE_USER_TOKEN = gql`
+  query {
+    isValidateUser
+  }
+`
