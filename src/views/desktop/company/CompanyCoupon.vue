@@ -1,6 +1,6 @@
 <script>
-import CompanyHeaderVue from '@/components/desktop/company/CompanyHeader.vue'
-import CompanyCouponList from '@/components/desktop/company/coupon/CompanyCouponList.vue'
+import CompanyHeaderVue from '@/components/company/CompanyHeader.vue'
+import CompanyCouponList from '@/components/company/coupon/CompanyCouponList.vue'
 export default {
   name: 'CompanyCoupon',
   components: {

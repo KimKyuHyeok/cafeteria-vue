@@ -1,30 +1,32 @@
 <template>
-  <div class="user-table-container">
-    <table class="user-table">
-      <thead>
-        <tr>
-          <th>이름</th>
-          <th>전화번호</th>
-          <th>이메일</th>
-          <th>상태</th>
-          <th>요청일</th>
-          <th>기타</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="user in pendingUsers" :key="user.id">
-          <td>{{ user.name }}</td>
-          <td>{{ user.phoneNumber }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.status === 'PENDING' ? '승인대기중' : user.status }}</td>
-          <td>{{ formatDate(user.createdAt) }}</td>
-          <td>
-            <button @click="approvedUser(user.id, user.name, user.email)">승인</button>
-            <button @click="rejectedUser(user.id, user.name, user.email)">거절</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="user-table-wrapper">
+    <div class="user-table-container">
+      <table class="user-table">
+        <thead>
+          <tr>
+            <th>이름</th>
+            <th>전화번호</th>
+            <th>이메일</th>
+            <th>상태</th>
+            <th>요청일</th>
+            <th>기타</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="user in pendingUsers" :key="user.id">
+            <td>{{ user.name }}</td>
+            <td>{{ user.phoneNumber }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.status === 'PENDING' ? '승인대기중' : user.status }}</td>
+            <td>{{ formatDate(user.createdAt) }}</td>
+            <td>
+              <button @click="approvedUser(user.id, user.name, user.email)">승인</button>
+              <button @click="rejectedUser(user.id, user.name, user.email)">거절</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -96,14 +98,22 @@ export default {
 </script>
 
 <style scoped>
+/* 컨테이너: 가로 스크롤을 적용할 부모 div */
+.user-table-wrapper {
+  width: 100%;
+  overflow-x: auto; /* 가로 스크롤 활성화 */
+  -webkit-overflow-scrolling: touch; /* iOS에서 부드러운 스크롤 */
+}
+
 .user-table-container {
-  margin: 20px;
+  min-width: 600px; /* 테이블이 너무 좁아지지 않도록 최소 너비 설정 */
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* 테이블 스타일 */
 .user-table {
   width: 100%;
   border-collapse: collapse;
@@ -114,6 +124,7 @@ export default {
 .user-table td {
   padding: 12px;
   border: 1px solid #ddd;
+  text-align: center;
 }
 
 .user-table th {
@@ -130,17 +141,40 @@ export default {
   background-color: #e9ecef;
 }
 
-.user-table td {
-  font-size: 14px;
-  color: #333;
+/* 버튼 스타일 */
+.user-table td button {
+  margin: 2px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
-.user-table th,
-.user-table td {
-  text-align: center;
+.user-table td button:first-child {
+  background-color: green;
+  color: white;
 }
 
-.user-table td {
-  vertical-align: middle;
+.user-table td button:last-child {
+  background-color: red;
+  color: white;
+}
+
+/* 반응형 스타일 */
+@media screen and (max-width: 768px) {
+  .user-table-container {
+    padding: 10px; /* 모바일에서는 패딩을 줄여서 공간 확보 */
+  }
+
+  .user-table th,
+  .user-table td {
+    padding: 8px; /* 모바일에서는 패딩을 줄여서 가독성 확보 */
+    font-size: 12px; /* 폰트 크기 줄이기 */
+  }
+
+  .user-table td button {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
 }
 </style>

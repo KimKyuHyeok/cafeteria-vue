@@ -1,8 +1,8 @@
 <script>
-import CompanyHeaderVue from '@/components/desktop/company/CompanyHeader.vue'
-import CompanyUserApprovedVue from '@/components/desktop/company/member/CompanyUserApproved.vue'
-import CompanyUserPendingVue from '@/components/desktop/company/member/CompanyUserPending.vue'
-import CompanyUserRejectedVue from '@/components/desktop/company/member/CompanyUserRejected.vue'
+import CompanyHeaderVue from '@/components/company/CompanyHeader.vue'
+import CompanyUserApprovedVue from '@/components/company/member/CompanyUserApproved.vue'
+import CompanyUserPendingVue from '@/components/company/member/CompanyUserPending.vue'
+import CompanyUserRejectedVue from '@/components/company/member/CompanyUserRejected.vue'
 
 export default {
   name: 'CompanyUser',
