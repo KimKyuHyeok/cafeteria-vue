@@ -87,8 +87,8 @@ export default {
         password: 'Siggwon1234@',
       },
       store: {
-        email: '',
-        password: '',
+        email: 'siggwon@store.com',
+        password: 'Siggwon1234@',
       },
     }
   },
