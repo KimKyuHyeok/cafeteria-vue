@@ -6,7 +6,7 @@
         <h3>{{ restaurant.name }}</h3>
         <p>{{ restaurant.address }}</p>
         <p>장당: {{ restaurant.price }}원</p>
-        <button @click="paymentPage(restaurant.id)">식권 구매</button>
+        <button @click="paymentPage()">식권 구매</button>
       </div>
     </div>
     <div v-if="restaurants.length == 0">
@@ -31,7 +31,7 @@ export default {
     updateRestaurants(data) {
       this.restaurants = data
     },
-    paymentPage(restaurantId) {
+    paymentPage() {
       alert('결제 시스템 준비중 입니다.')
       // this.$router.push(`/restaurant/${restaurantId}/payment`)
     },
