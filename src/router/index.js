@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from '@/views/desktop/Login.vue';
+import Login from '@/views/Login.vue';
 import companyRoutes from "./company";
 import userRoutes from "./user";
-import Signup from '@/views/desktop/Signup.vue';
+import Signup from '@/views/Signup.vue';
 import storeRoutes from "./store";
 import { apolloClient } from "@/config/apollo-client";
 import { VALIDATE_USER_TOKEN } from "@/graphql";

@@ -100,8 +100,10 @@
       </div>
 
       <div v-if="selectedTab === 'store-signup'" class="store-signup-input">
-        <label for="store-email">상점 회원가입</label>
+        <label for="store-email">이메일</label>
         <input id="store-email" v-model="store.email" type="text" placeholder="이메일을 입력하세요." required />
+        <label for="store-name">상점 명</label>
+        <input id="store-name" v-model="store.name" type="text" placeholder="가게명을 입력하세요." required />
         <label for="store-password">비밀번호</label>
         <input
           id="store-password"
@@ -113,7 +115,7 @@
         <label for="store-password">비밀번호 확인</label>
         <input
           id="store-password"
-          v-model="store.password"
+          v-model="store.passwordConfirmation"
           type="password"
           placeholder="비밀번호를 입력하세요."
           required
@@ -152,6 +154,7 @@ export default {
       },
       store: {
         email: '',
+        name: '',
         password: '',
       },
     }
@@ -178,7 +181,7 @@ export default {
                     email: this.user.email,
                     password: this.user.password,
                     name: this.user.name,
-                    phoneNumber: this.firstNumber + '-' + this.secondNumber + '-' + this.thirdNumber,
+                    phoneNumber: this.user.firstNumber + '-' + this.user.secondNumber + '-' + this.user.thirdNumber,
                   },
                 },
               })
@@ -232,6 +235,7 @@ export default {
                 variables: {
                   data: {
                     email: this.store.email,
+                    name: this.store.name,
                     password: this.store.password,
                   },
                 },
