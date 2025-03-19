@@ -75,7 +75,8 @@ export default {
     },
     async userInfoUpdate() {
       event.preventDefault()
-      let response
+      let response;
+      let phoneNumber = this.userInfo.firstNumber + "-" + this.userInfo.secondNumber + "-" + this.userInfo.thirdNumber
       try {
         if (this.userInfo.password) {
           const passwordMatch = this.passwordMatches(this.userInfo.password, this.userInfo.passwordConfirmation)
@@ -84,7 +85,7 @@ export default {
             response = await this.$apollo.mutate({
               mutation: USER_INFO_UPDATE,
               variables: {
-                data: { name: this.userInfo.name, password: this.userInfo.password },
+                data: { name: this.userInfo.name, password: this.userInfo.password, phoneNumber: phoneNumber },
               },
             })
           } else {
@@ -95,12 +96,13 @@ export default {
           response = await this.$apollo.mutate({
             mutation: USER_INFO_UPDATE,
             variables: {
-              data: { name: this.userInfo.name },
+              data: { name: this.userInfo.name, phoneNumber: phoneNumber },
             },
           })
         }
 
-        console.log('Result : ', response)
+        alert("수정이 완료되었습니다.");
+        this.$router.replace();
       } catch (error) {
         console.error('User Info Update Error :', error)
       }
