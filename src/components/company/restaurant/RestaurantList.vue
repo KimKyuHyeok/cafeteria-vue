@@ -32,7 +32,7 @@ export default {
       this.restaurants = data
     },
     paymentPage(restaurantId) {
-      alert("결제 시스템 준비중 입니다.")
+      alert('결제 시스템 준비중 입니다.')
       // this.$router.push(`/restaurant/${restaurantId}/payment`)
     },
   },

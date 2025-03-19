@@ -37,7 +37,7 @@ export default {
     status: {
       type: String,
       required: true,
-      validator: value => ['APPROVED', 'REJECTED'].includes(value),
+      validator: (value) => ['APPROVED', 'REJECTED'].includes(value),
     },
   },
   data() {
@@ -53,7 +53,8 @@ export default {
       const query = this.status === 'APPROVED' ? GET_USERS_APPROVED : GET_USERS_REJECTED
       try {
         const { data } = await this.$apollo.query({ query })
-        this.users = this.status === 'APPROVED' ? data.userWithCompanyListByApproved : data.userWithCompanyListByRejected
+        this.users =
+          this.status === 'APPROVED' ? data.userWithCompanyListByApproved : data.userWithCompanyListByRejected
       } catch (error) {
         console.error(error)
       }
