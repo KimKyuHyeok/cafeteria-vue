@@ -65,7 +65,7 @@ export default {
           this.speakText('확인되었습니다.')
 
           this.lastDetectedCode = qrContent
-          this.$router.replace();
+          this.$router.replace()
         } else {
           console.log('이미 사용한 코드입니다.')
         }

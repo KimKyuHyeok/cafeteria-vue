@@ -151,7 +151,7 @@ const logout = () => {
     text-align: center;
     /* 모바일에서 세로로 정렬 */
     display: flex;
-    flex-direction: column;  /* 세로로 정렬 */
+    flex-direction: column; /* 세로로 정렬 */
   }
 
   .menu li {

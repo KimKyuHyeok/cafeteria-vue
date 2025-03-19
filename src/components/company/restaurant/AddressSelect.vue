@@ -22,7 +22,7 @@
 
     <div v-if="selectedSubRegion" class="search-container">
       <label for="searchRegion">상세 주소</label>
-      <input id="searchRegion" type="text" v-model="searchRegion" placeholder="신 주소로 입력해주세요." />
+      <input id="searchRegion" v-model="searchRegion" type="text" placeholder="신 주소로 입력해주세요." />
     </div>
 
     <button class="search-button" @click="handleSubmit">검색</button>
@@ -115,7 +115,8 @@ export default {
   min-width: 200px;
 }
 
-select, input {
+select,
+input {
   padding: 8px 12px;
   font-size: 14px;
   margin-top: 5px;
