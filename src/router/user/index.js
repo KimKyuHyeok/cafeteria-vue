@@ -1,6 +1,6 @@
-import UserCoupons from '@/views/desktop/user/UserCoupons.vue'
-import CompanySearch from '@/views/desktop/user/CompanySearch.vue'
-import MyPage from '@/views/desktop/user/MyPage.vue'
+import UserCoupons from '@/views/user/UserCoupons.vue'
+import CompanySearch from '@/views/user/CompanySearch.vue'
+import MyPage from '@/views/user/MyPage.vue'
 
 const userRoutes = [
   {

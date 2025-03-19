@@ -79,12 +79,12 @@ export default {
     return {
       selectedTab: 'user-login',
       user: {
-        email: '',
-        password: '',
+        email: 'siggwon-moa@admin.com',
+        password: 'Siggwon1234@',
       },
       company: {
-        email: '',
-        password: '',
+        email: 'siggwon-moa@company.com',
+        password: 'Siggwon1234@',
       },
       store: {
         email: '',

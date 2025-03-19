@@ -178,7 +178,7 @@ export default {
                     email: this.user.email,
                     password: this.user.password,
                     name: this.user.name,
-                    phoneNumber: this.firstNumber + '-' + this.secondNumber + '-' + this.thirdNumber,
+                    phoneNumber: this.user.firstNumber + '-' + this.user.secondNumber + '-' + this.user.thirdNumber,
                   },
                 },
               })

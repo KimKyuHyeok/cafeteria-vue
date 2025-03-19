@@ -1,4 +1,4 @@
-import QRcodeReaderVue from '@/views/desktop/store/QR-reader.vue'
+import QRcodeReaderVue from '@/views/store/QR-reader.vue'
 
 const storeRoutes = [
   {
