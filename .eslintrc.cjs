@@ -18,6 +18,11 @@ module.exports = {
 		'trailingComma': 'all', // 끝에 쉼표 추가
 	  }],
 	  'vue/multi-word-component-names': 'off',  // 컴포넌트 이름 규칙 무시 (필요한 경우)
+	  'no-unused-vars': ['warn', {              // 사용되지 않는 변수에 대한 경고 수준을 'warn'으로 설정
+		'vars': 'all',  // 모든 변수에서 검사
+		'args': 'after-used',  // 사용된 인수만 검사
+		'ignoreRestSiblings': false,  // rest 파라미터의 형제들 무시 안 함
+	  }],
 	},
   }
   

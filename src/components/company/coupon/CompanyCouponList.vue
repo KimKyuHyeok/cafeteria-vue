@@ -6,7 +6,7 @@
         <h3>{{ data.name }}</h3>
         <p>{{ data.address }}</p>
         <p>잔여 수량: {{ data.coupon[0].count }}</p>
-        <button @click="paymentPage(data.id)">식권 구매</button>
+        <button @click="paymentPage()">식권 구매</button>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@ export default {
 
       this.restaurantWithCoupons = data.couponsFindByCompanyId
     },
-    paymentPage(restaurantId) {
+    paymentPage() {
       alert('결제 시스템 준비 중입니다.')
       // this.$router.push(`/restaurant/${restaurantId}/payment`)
     },

@@ -75,14 +75,13 @@ export default {
     },
     async userInfoUpdate() {
       event.preventDefault()
-      let response
       let phoneNumber = this.userInfo.firstNumber + '-' + this.userInfo.secondNumber + '-' + this.userInfo.thirdNumber
       try {
         if (this.userInfo.password) {
           const passwordMatch = this.passwordMatches(this.userInfo.password, this.userInfo.passwordConfirmation)
 
           if (passwordMatch) {
-            response = await this.$apollo.mutate({
+            await this.$apollo.mutate({
               mutation: USER_INFO_UPDATE,
               variables: {
                 data: { name: this.userInfo.name, password: this.userInfo.password, phoneNumber: phoneNumber },
@@ -93,7 +92,7 @@ export default {
             return
           }
         } else {
-          response = await this.$apollo.mutate({
+          await this.$apollo.mutate({
             mutation: USER_INFO_UPDATE,
             variables: {
               data: { name: this.userInfo.name, phoneNumber: phoneNumber },
