@@ -28,16 +28,6 @@ const router = createRouter({
   routes
 });
 
-// router.beforeEach((to, from, next) => {
-//   const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)
-
-//   if (isMobile && to.path === '/login') {
-//     window.location.href = 'http://m.localhost/login'
-//   } else {
-//     next()
-//   }
-// })
-
 router.beforeEach(async (to, from, next) => {
   const userToken = localStorage.getItem('userToken');
   const companyToken = localStorage.getItem('companyToken');
