@@ -1,6 +1,6 @@
 <script>
-import UserHeader from '@/components/desktop/user/UserHeader.vue'
-import CompanySearchBar from '@/components/desktop/user/CompanySearchBar.vue'
+import UserHeader from '@/components/user/UserHeader.vue'
+import CompanySearchBar from '@/components/user/CompanySearchBar.vue'
 
 export default {
   name: 'CompanySearch',

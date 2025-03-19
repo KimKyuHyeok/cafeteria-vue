@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import CompanyHeaderVue from '@/components/desktop/company/CompanyHeader.vue'
-import RestaurantList from '@/components/desktop/company/restaurant/RestaurantList.vue'
+import CompanyHeaderVue from '@/components/company/CompanyHeader.vue'
+import RestaurantList from '@/components/company/restaurant/RestaurantList.vue'
 
 export default {
   name: 'CompanyRestaurant',

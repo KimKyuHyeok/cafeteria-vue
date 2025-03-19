@@ -1,9 +1,9 @@
 <script>
-import UserHeader from '@/components/desktop/user/UserHeader.vue'
-import MyInfo from '@/components/desktop/user/MyInfo.vue'
+import UserHeader from '@/components/user/UserHeader.vue'
+import MyInfo from '@/components/user/MyInfo.vue'
 
 export default {
-  name: 'UserCoupons',
+  name: 'UserMyPage',
   components: {
     UserHeader,
     MyInfo,

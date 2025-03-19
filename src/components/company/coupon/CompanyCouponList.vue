@@ -33,7 +33,8 @@ export default {
       this.restaurantWithCoupons = data.couponsFindByCompanyId
     },
     paymentPage(restaurantId) {
-      this.$router.push(`/restaurant/${restaurantId}/payment`)
+      alert('결제 시스템 준비 중입니다.')
+      // this.$router.push(`/restaurant/${restaurantId}/payment`)
     },
   },
 }

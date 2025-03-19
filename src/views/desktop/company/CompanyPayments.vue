@@ -1,6 +1,6 @@
 <script>
-import CompanyHeaderVue from '@/components/desktop/company/CompanyHeader.vue'
-import PaymentList from '@/components/desktop/company/payments/PaymentList.vue'
+import CompanyHeaderVue from '@/components/company/CompanyHeader.vue'
+import PaymentList from '@/components/company/payments/PaymentList.vue'
 export default {
   name: 'CompanyPayments',
   components: {

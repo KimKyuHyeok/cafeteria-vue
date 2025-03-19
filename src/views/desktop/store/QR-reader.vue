@@ -18,7 +18,7 @@
 <script>
 import { QrcodeStream } from 'vue-qrcode-reader'
 import { QRCODE_READER } from '@/graphql'
-import StoreHeader from '@/components/desktop/store/StoreHeader.vue'
+import StoreHeader from '@/components/store/StoreHeader.vue'
 
 export default {
   components: {
