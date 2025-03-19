@@ -3,7 +3,7 @@ import { createApolloProvider } from '@vue/apollo-option'
 
 // HttpLink를 생성하고 API 엔드포인트를 설정
 const httpLink = new HttpLink({
-  uri: import.meta.env.API_URL,
+  uri: import.meta.env.VUE_APP_API_URL,
 })
 
 // 인증 토큰을 헤더에 추가하는 링크 생성
@@ -35,7 +35,7 @@ const authLink = new ApolloLink((operation, forward) => {
 })
 
 // Apollo Client 인스턴스 생성
-const apolloClient = new ApolloClient({
+export const apolloClient = new ApolloClient({
   link: authLink.concat(httpLink), // authLink와 httpLink 연결
   cache: new InMemoryCache(),
 })

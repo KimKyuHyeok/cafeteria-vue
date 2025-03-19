@@ -4,8 +4,8 @@ import companyRoutes from './company'
 import userRoutes from './user'
 import Signup from '@/views/Signup.vue'
 import storeRoutes from './store'
-import { apolloClient } from '@/config/apollo-client'
 import { VALIDATE_USER_TOKEN } from '@/graphql'
+import { apolloClient } from '@/apollo'
 
 const routes = [
   ...companyRoutes,
