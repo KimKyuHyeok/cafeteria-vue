@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, HttpLink, gql } from '@apollo/client/core'
 
 const httpLink = new HttpLink({
-  uri: import.meta.env.VITE_API_URL,
+  uri: import.meta.env.API_URL,
   headers: () => ({
     Authorization: `Bearer ${
       localStorage.getItem('userToken') ||
