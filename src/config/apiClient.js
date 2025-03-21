@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:80'
+const BASE_URL = 'http://www.siggwon-moa.shop'
 
 const apiClient = axios.create({
   baseURL: BASE_URL,
