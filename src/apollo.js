@@ -14,6 +14,8 @@ const authLink = new ApolloLink((operation, forward) => {
     token = localStorage.getItem('companyToken')
   } else if (localStorage.getItem('userToken')) {
     token = localStorage.getItem('userToken')
+  } else if (localStorage.getItem('storeToken')) {
+    token = localStorage.getItem('storeToken')
   }
 
   if (token) {
