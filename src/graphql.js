@@ -19,7 +19,7 @@ export const USER_LOGIN = gql`
 `
 
 export const STORE_LOGIN = gql`
-  mutation storeSignin($data: StoreInput!) {
+  mutation storeSignin($data: StoreSigninInput!) {
     storeSignin(data: $data) {
       accessToken
       refreshToken
@@ -215,7 +215,7 @@ export const COMPANY_SIGNUP = gql`
 `
 
 export const STORE_SIGNIN = gql`
-  mutation storeSignin($data: StoreInput!) {
+  mutation storeSignin($data: StoreSigninInput!) {
     storeSignin(data: $data) {
       accessToken
       refreshToken
@@ -224,7 +224,7 @@ export const STORE_SIGNIN = gql`
 `
 
 export const STORE_SIGNUP = gql`
-  mutation storeSignup($data: StoreInput!) {
+  mutation storeSignup($data: StoreSignupInput!) {
     storeSignup(data: $data) {
       accessToken
       refreshToken
