@@ -64,7 +64,7 @@
     </form>
 
     <div id="links-container">
-      <a href="#">아이디/비밀번호 찾기</a>
+      <!-- <a href="#">아이디/비밀번호 찾기</a> -->
       <a href="/signup">회원가입</a>
     </div>
   </div>
@@ -161,12 +161,28 @@ export default {
             return
         }
       } catch (error) {
-        if (error.graphQLErrors[0]) {
-          alert(error.graphQLErrors[0].message)
-          return
+        if (error.graphQLErrors && error.graphQLErrors.length > 0) {
+          console.error('GraphQL Errors:', error.graphQLErrors);
+          error.graphQLErrors.forEach((graphQLError) => {
+            console.error(`Message: ${graphQLError.message}`);
+            if (graphQLError.locations) {
+              console.error(`Location: ${JSON.stringify(graphQLError.locations)}`);
+            }
+            if (graphQLError.extensions) {
+              console.error(`Extensions: ${JSON.stringify(graphQLError.extensions)}`);
+            }
+          });
         }
-        console.error('GraphQL Error:', error)
-        console.error('Network Error:', error.networkError)
+
+        if (error.networkError) {
+          console.error('Network Error:', error.networkError);
+          if (error.networkError.result) {
+            console.error('Network Error Result:', error.networkError.result);
+          }
+        }
+
+      console.error('Error:', error);
+      alert('로그인에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
       }
     },
   },
