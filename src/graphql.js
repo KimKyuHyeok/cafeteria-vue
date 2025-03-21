@@ -1,32 +1,5 @@
 import { gql } from '@apollo/client'
 
-export const COMPANY_LOGIN = gql`
-  mutation signin($data: CompanySigninInput!) {
-    signin(data: $data) {
-      accessToken
-      refreshToken
-    }
-  }
-`
-
-export const USER_LOGIN = gql`
-  mutation userSignin($data: UserSigninInput!) {
-    userSignin(data: $data) {
-      accessToken
-      refreshToken
-    }
-  }
-`
-
-export const STORE_LOGIN = gql`
-  mutation storeSignin($data: StoreSigninInput!) {
-    storeSignin(data: $data) {
-      accessToken
-      refreshToken
-    }
-  }
-`
-
 export const GET_COUPONS = gql`
   query {
     couponsFindByCompanyId {
