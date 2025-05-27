@@ -24,7 +24,11 @@ export default {
         localStorage.setItem('userToken', response.data.loginWithKakao.accessToken)
         this.$router.push('/user/coupons')
       } else {
-        this.$router.push('/auth/signup')
+        const username = response.data.loginWithKakao.username
+        this.$router.push({
+            path: '/auth/signup',
+            query: { username }
+        })
       }
     } catch (error) {
       console.error(error)

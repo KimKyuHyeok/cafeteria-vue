@@ -42,6 +42,7 @@ export default {
           alert('전화번호에 하이픈(-)을 포함할 수 없습니다.')
           return
         }
+        const username = this.$route.query.username
 
         const { data } = await this.$apollo.mutate({
           mutation: SIGNUP_WITH_KAKAO,
@@ -50,6 +51,7 @@ export default {
               name: this.form.name,
               email: this.form.email,
               phoneNumber: this.form.phoneNumber,
+              username
             },
           },
         })
