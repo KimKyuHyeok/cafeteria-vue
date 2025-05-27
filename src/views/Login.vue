@@ -31,7 +31,8 @@
           type="password"
           placeholder="비밀번호를 입력하세요."
           required
-        />      </div>
+        />
+      </div>
 
       <div v-if="selectedTab === 'company-login'" class="company-login-input">
         <label for="company-email">기업 아이디</label>
@@ -60,9 +61,9 @@
       </div>
 
       <button type="submit">로그인</button>
-      <img 
-        v-if="selectedTab === 'user-login'" 
-        class="kakao-btn" 
+      <img
+        v-if="selectedTab === 'user-login'"
+        class="kakao-btn"
         src="/src/kakao_login_medium_wide.png"
         @click="redirectToKakaoLogin"
       />
@@ -194,12 +195,12 @@ export default {
 
     async redirectToKakaoLogin() {
       const response = await apolloClient.query({
-        query: GET_KAKAO_AUTH_URL
+        query: GET_KAKAO_AUTH_URL,
       })
 
-      const kakaoUrl = response.data.getKakaoAuthUrl;
-      window.location.href = kakaoUrl;
-    }
+      const kakaoUrl = response.data.getKakaoAuthUrl
+      window.location.href = kakaoUrl
+    },
   },
 }
 </script>

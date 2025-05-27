@@ -3,6 +3,7 @@ import Login from '@/views/Login.vue'
 import companyRoutes from './company'
 import userRoutes from './user'
 import Signup from '@/views/Signup.vue'
+import KakaoCallback from '@/views/KakaoCallback.vue'
 import storeRoutes from './store'
 import { VALIDATE_USER_TOKEN } from '@/graphql'
 import { apolloClient } from '@/apollo'
@@ -20,6 +21,11 @@ const routes = [
     path: '/signup',
     name: 'signup',
     component: Signup,
+  },
+  {
+    path: '/oauth',
+    name: 'kakaoCallback',
+    component: KakaoCallback,
   },
 ]
 
