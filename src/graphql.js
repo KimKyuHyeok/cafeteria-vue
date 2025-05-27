@@ -249,3 +249,20 @@ export const VALIDATE_USER_TOKEN = gql`
     isValidateUser
   }
 `
+
+export const GET_KAKAO_AUTH_URL = gql`
+  query {
+    getKakaoAuthUrl
+  }
+`
+
+export const LOGIN_WITH_KAKAO = gql`
+  mutation LoginWithKakao($code: String!) {
+    loginWithKakao(code: $code) {
+      isRegistered
+      accessToken
+      refreshToken
+      username
+    }
+  }
+`
