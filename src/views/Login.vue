@@ -64,7 +64,7 @@
       <img
         v-if="selectedTab === 'user-login'"
         class="kakao-btn"
-        src="/src/kakao_login_medium_wide.png"
+        src="/images/kakao_login_medium_wide.png"
         @click="redirectToKakaoLogin"
       />
     </form>
