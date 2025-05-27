@@ -31,8 +31,7 @@
           type="password"
           placeholder="비밀번호를 입력하세요."
           required
-        />
-      </div>
+        />      </div>
 
       <div v-if="selectedTab === 'company-login'" class="company-login-input">
         <label for="company-email">기업 아이디</label>
@@ -61,6 +60,12 @@
       </div>
 
       <button type="submit">로그인</button>
+      <img 
+        v-if="selectedTab === 'user-login'" 
+        class="kakao-btn" 
+        src="/src/kakao_login_medium_wide.png"
+        @click="redirectToKakaoLogin"
+      />
     </form>
 
     <div id="links-container">
@@ -71,7 +76,8 @@
 </template>
 
 <script>
-import { COMPANY_SIGNIN, STORE_SIGNIN, USER_SIGNIN } from '@/graphql'
+import { COMPANY_SIGNIN, GET_KAKAO_AUTH_URL, STORE_SIGNIN, USER_SIGNIN } from '@/graphql'
+import { apolloClient } from '@/apollo'
 
 export default {
   name: 'Login',
@@ -185,6 +191,15 @@ export default {
         alert('로그인에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.')
       }
     },
+
+    async redirectToKakaoLogin() {
+      const response = await apolloClient.query({
+        query: GET_KAKAO_AUTH_URL
+      })
+
+      const kakaoUrl = response.data.getKakaoAuthUrl;
+      window.location.href = kakaoUrl;
+    }
   },
 }
 </script>
@@ -287,5 +302,10 @@ button:hover {
 
 #links-container a:hover {
   color: #0056b3;
+}
+
+.kakao-btn {
+  display: block;
+  margin: 12px auto 0;
 }
 </style>
