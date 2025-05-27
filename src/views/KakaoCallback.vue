@@ -26,8 +26,8 @@ export default {
       } else {
         const username = response.data.loginWithKakao.username
         this.$router.push({
-            path: '/auth/signup',
-            query: { username }
+          path: '/auth/signup',
+          query: { username },
         })
       }
     } catch (error) {

@@ -51,7 +51,7 @@ export default {
               name: this.form.name,
               email: this.form.email,
               phoneNumber: this.form.phoneNumber,
-              username
+              username,
             },
           },
         })
