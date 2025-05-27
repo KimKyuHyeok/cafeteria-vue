@@ -194,7 +194,7 @@ export default {
     },
 
     async redirectToKakaoLogin() {
-      const response = await apolloClient.query({
+      const response = await this.$apollo.query({
         query: GET_KAKAO_AUTH_URL,
       })
 
