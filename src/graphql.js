@@ -266,3 +266,9 @@ export const LOGIN_WITH_KAKAO = gql`
     }
   }
 `
+
+export const SIGNUP_WITH_KAKAO = gql`
+  mutation SignupWithKakao($data: AuthSignupDto!) {
+    signupWithKakao(data: $data)
+  }
+`
