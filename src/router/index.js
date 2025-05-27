@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '@/views/Login.vue'
+import AuthSignup from '@/views/AuthSignup.vue'
 import companyRoutes from './company'
 import userRoutes from './user'
 import Signup from '@/views/Signup.vue'
@@ -27,6 +28,11 @@ const routes = [
     name: 'kakaoCallback',
     component: KakaoCallback,
   },
+  {
+    path: '/auth/signup',
+    name: 'AuthSignup',
+    component: AuthSignup
+  }
 ]
 
 const router = createRouter({
