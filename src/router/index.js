@@ -31,8 +31,8 @@ const routes = [
   {
     path: '/auth/signup',
     name: 'AuthSignup',
-    component: AuthSignup
-  }
+    component: AuthSignup,
+  },
 ]
 
 const router = createRouter({
