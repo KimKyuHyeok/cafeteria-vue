@@ -18,15 +18,15 @@ export default {
         mutation: LOGIN_WITH_KAKAO,
         variables: { code },
       })
-      
-      console.log(response);
+
+      console.log(response)
 
       const result = response.data.loginWithKakao.isRegistered
       if (result) {
         localStorage.setItem('userToken', response.data.loginWithKakao.accessToken)
         this.$router.push('/user/coupons')
       } else {
-        this.$router.push('/auth/signup');
+        this.$router.push('/auth/signup')
       }
     } catch (error) {
       console.error(error)
