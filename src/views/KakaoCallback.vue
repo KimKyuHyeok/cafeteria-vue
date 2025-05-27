@@ -19,8 +19,6 @@ export default {
         variables: { code },
       })
 
-      console.log(response)
-
       const result = response.data.loginWithKakao.isRegistered
       if (result) {
         localStorage.setItem('userToken', response.data.loginWithKakao.accessToken)

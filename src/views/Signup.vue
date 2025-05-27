@@ -131,7 +131,7 @@
 import { COMPANY_SIGNUP, STORE_SIGNUP, USER_SIGNUP } from '@/graphql'
 
 export default {
-  name: '',
+  name: 'Signup',
   data() {
     return {
       selectedTab: 'user-signup',

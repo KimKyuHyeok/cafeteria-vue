@@ -78,7 +78,6 @@
 
 <script>
 import { COMPANY_SIGNIN, GET_KAKAO_AUTH_URL, STORE_SIGNIN, USER_SIGNIN } from '@/graphql'
-import { apolloClient } from '@/apollo'
 
 export default {
   name: 'Login',
