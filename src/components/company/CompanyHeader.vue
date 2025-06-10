@@ -8,6 +8,7 @@
       <button class="close-button" @click="toggleMenu">✕</button>
       <ul>
         <li><a href="/company/restaurant">식당찾기</a></li>
+        <li><a href="/chat/room">채팅방</a></li>
         <li><a href="/company/coupon">식권관리</a></li>
         <li><a href="/company/user">회원관리</a></li>
         <li><a href="/company/payment-history">결제내역</a></li>
