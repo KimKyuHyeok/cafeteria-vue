@@ -9,7 +9,7 @@
       <ul>
         <li><a href="/user/coupons">식권발급</a></li>
         <li><a href="/user/search-company">회사찾기</a></li>
-        <li><a href="/chat/room">채팅방</a></li>        
+        <li><a href="/chat/room">채팅방</a></li>
         <li><a href="/user/my-page">내 정보</a></li>
         <li><button class="logout-button" @click="logout">로그아웃</button></li>
       </ul>

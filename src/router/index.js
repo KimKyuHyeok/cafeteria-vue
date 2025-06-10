@@ -38,8 +38,8 @@ const routes = [
     path: '/chat/room',
     name: 'ChatRoom',
     component: ChatRoom,
-    requiresAuth: true
-  }
+    requiresAuth: true,
+  },
 ]
 
 const router = createRouter({
