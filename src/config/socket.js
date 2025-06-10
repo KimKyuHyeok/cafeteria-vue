@@ -1,6 +1,6 @@
 import { io } from 'socket.io-client'
 
-const socket = io('http://www.siggwon-moa.shop/', {
+const socket = io('http://api.siggwon-moa.shop', {
   transports: ['websocket'],
   auth: {
     token: {
