@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '@/views/Login.vue'
 import AuthSignup from '@/views/AuthSignup.vue'
+import ChatRoom from '@/views/ChatRoom.vue'
 import companyRoutes from './company'
 import userRoutes from './user'
 import Signup from '@/views/Signup.vue'
@@ -33,6 +34,12 @@ const routes = [
     name: 'AuthSignup',
     component: AuthSignup,
   },
+  {
+    path: '/chat/room',
+    name: 'ChatRoom',
+    component: ChatRoom,
+    requiresAuth: true
+  }
 ]
 
 const router = createRouter({
